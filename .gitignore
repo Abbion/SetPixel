@@ -1,0 +1,15 @@
+Windows/Windows.sln
+Windows/Sp_Workspace_Win.code-workspace
+Windows/Debug
+Windows/Release
+Windows/SetPixel/Debug
+Windows/SetPixel/Release
+Windows/.vs
+Windows/SetPixel/SetPixel.vcxproj
+Windows/SetPixel/SetPixel.vcxproj.filters
+Windows/SetPixel/SetPixel.vcxproj.user
+Linux/*.o
+Linux/Sp_Workspace.code-workspace
+Windows/SetPixel/SPICO.ico
+sp/.vscode/settings.json
+Logo
