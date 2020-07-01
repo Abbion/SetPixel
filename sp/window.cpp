@@ -44,7 +44,7 @@ sp::PixelWindow::PixelWindow(unsigned int width, unsigned int height, const char
     m_windowExists = true;
 
     //Select the kind of events we are interested in.
-    XSelectInput(m_display, m_window,  KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask | StructureNotifyMask | FocusChangeMask);
+    XSelectInput(m_display, m_window, KeyPressMask | KeyReleaseMask | ButtonPressMask | ButtonReleaseMask | StructureNotifyMask | FocusChangeMask);
  
     //Map (show) the window.
     XMapWindow(m_display, m_window);
@@ -85,6 +85,7 @@ sp::PixelWindow::~PixelWindow()
         XDestroyWindow(m_display, m_window);
         XCloseDisplay(m_display);
     }
+
 }
 //-----------------------------------------------------
 
@@ -114,8 +115,10 @@ void sp::PixelWindow::setPosition(int x_pos, int y_pos)
 //-----------------------------------------------------
 void sp::PixelWindow::setTitle(const char* title)
 {
-    XStoreName(m_display, m_window, title);
-    XSetIconName(m_display, m_window, title);
+    m_title = title;
+    XStoreName(m_display, m_window, m_title);
+    XSetIconName(m_display, m_window, m_title);
+    
 }
 //-----------------------------------------------------
 

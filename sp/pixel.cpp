@@ -1,6 +1,6 @@
 #include "pixel.h"
 #include <iostream>
-
+#include <string.h>
 
 //==============BITMAP==============
 sp::BitMap::BitMap(const vector2i& pos, const vector2i& size) :

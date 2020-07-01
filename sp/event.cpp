@@ -27,6 +27,10 @@ void sp::Event::updateEventType()
         type = EventType::Resized;
     break;
 
+    case Expose:
+        std::cout << "Exp\n";
+    break;
+
     default:
         type = EventType::Null;
         break;

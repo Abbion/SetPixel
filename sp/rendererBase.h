@@ -37,6 +37,7 @@ protected:
     Color m_defaultDraw;
 
     bool m_showFps = false;
+    bool m_resetTitle = false;
     int m_fps = 0;
 };
 }

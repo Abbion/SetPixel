@@ -29,6 +29,7 @@ public:
     virtual void clear();
     virtual void draw(const Pixel& drawablePixel);
     virtual void drawSet(Pixel* drawablePixelSet, int pixCount);
+    virtual void draw(const BitMap& bitMap);
     virtual void display();
 
 protected:

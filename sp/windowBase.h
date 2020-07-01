@@ -20,6 +20,7 @@ public:
 protected:
     int m_x_pos, m_y_pos;
     unsigned int m_width, m_height;
+    const char* m_title;
     bool m_running = true;
 };
 };

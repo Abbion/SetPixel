@@ -85,10 +85,10 @@ void sp::Renderer::draw(const Pixel& drawablePixel)
 {
     for (int i = 0; i < m_pixelSize; i++)
     {
+        int Ypos = (drawablePixel.getPosition().y * m_pixelSize) + i;
         for (int j = 0; j < m_pixelSize; j++)
         {
             int Xpos = (drawablePixel.getPosition().x * m_pixelSize) + j;
-            int Ypos = (drawablePixel.getPosition().y * m_pixelSize) + i;
             if(pixelInRenderSpace(Xpos, Ypos))
             {
                 XPutPixel(m_imageMap, Xpos, Ypos, drawablePixel.getColor().getHexRGB());
@@ -107,10 +107,11 @@ void sp::Renderer::drawSet(Pixel* drawablePixelSet, int pixCount)
     {
         for (int i = 0; i < m_pixelSize; i++)
         {
+            int Ypos = (drawablePixelSet[k].getPosition().y * m_pixelSize) + i;
+            
             for (int j = 0; j < m_pixelSize; j++)
             {
                 int Xpos = (drawablePixelSet[k].getPosition().x * m_pixelSize) + j;
-                int Ypos = (drawablePixelSet[k].getPosition().y * m_pixelSize) + i;
                 if(pixelInRenderSpace(Xpos, Ypos))
                 {
                     XPutPixel(m_imageMap, Xpos, Ypos, drawablePixelSet[k].getColor().getHexRGB());
@@ -124,6 +125,42 @@ void sp::Renderer::drawSet(Pixel* drawablePixelSet, int pixCount)
 
 
 //-----------------------------------------------------
+void sp::Renderer::draw(const BitMap& bitMap)
+{
+    int fullSize = bitMap.m_size.x * bitMap.m_size.y;
+
+    int bitPixel = 0;
+    for (int p_y = 0; p_y < bitMap.m_size.y; p_y++)
+    {
+        for (int p_x = 0; p_x < bitMap.m_size.x; p_x++)
+        {
+            if(bitMap.m_pixelMap[bitPixel])
+            {
+                for (int i = 0; i < m_pixelSize; i++)
+                {
+                    int Ypos = ((bitMap.m_startPos.y + p_y) * m_pixelSize) + i;
+                    
+                    for (int j = 0; j < m_pixelSize; j++)
+                    {
+                        int Xpos = ((bitMap.m_startPos.x + p_x) * m_pixelSize) + j;
+                        if(pixelInRenderSpace(Xpos, Ypos))
+                        {
+                            XPutPixel(m_imageMap, Xpos, Ypos, m_defaultDraw.getHexRGB());
+                        }
+                    }    
+                }
+            }
+
+            //X_pixel loop
+            bitPixel++;
+        }
+    }
+}   
+//-----------------------------------------------------
+
+
+
+//-----------------------------------------------------
 void sp::Renderer::display()
 {
     int screen_num = DefaultScreen(ptr_display);
@@ -132,14 +169,23 @@ void sp::Renderer::display()
     {
         displayFps();
         calculateFps();
+        m_resetTitle = true;
     }
+    else if(m_resetTitle)
+    {
+        char* k_str;
+        XGetIconName(ptr_display, *ptr_window, &k_str);
+        XStoreName(ptr_display, *ptr_window, k_str);
+        m_resetTitle = false;
+    }
+    
     XPutImage(ptr_display, *ptr_window, DefaultGC(ptr_display,screen_num), m_imageMap, 0, 0, 0, 0, m_windowSpaceWidth, m_windowSpaceHeight);
 }
 //-----------------------------------------------------
 
 
 
-//-----------------------------------------------------
+//-----------------------------------------------------x
 void sp::Renderer::calculateFps()
 {
     m_timeStop = std::chrono::high_resolution_clock::now();
@@ -161,19 +207,11 @@ void sp::Renderer::calculateFps()
 //The fps value may flicker due to the way the X11 implements drawing (event based).
 void sp::Renderer::displayFps()
 {
-    XFontStruct *font;
-    Color fontColor(255, 0, 0);
-
-    font = XLoadQueryFont(ptr_display,"10x20");
-    
-    XGCValues gc_values;
-    gc_values.foreground = fontColor.getHexRGB();
-    gc_values.font = font->fid;
-    GC gc_context = XCreateGC(ptr_display , *ptr_window, GCForeground + GCFont, &gc_values);
-
     std::ostringstream os;
-    os << "FPS: " << m_fps;
-    XDrawImageString(ptr_display, *ptr_window, gc_context, 0 , 16, os.str().c_str(), os.str().length());
+    char* k_str;
+    XGetIconName(ptr_display, *ptr_window, &k_str);
+    os << k_str << " FPS: " << m_fps;
+    XStoreName(ptr_display, *ptr_window, os.str().c_str());
 }
 //-----------------------------------------------------
 #endif
