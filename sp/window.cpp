@@ -118,7 +118,6 @@ void sp::PixelWindow::setTitle(const char* title)
     m_title = title;
     XStoreName(m_display, m_window, m_title);
     XSetIconName(m_display, m_window, m_title);
-    
 }
 //-----------------------------------------------------
 
@@ -145,6 +144,31 @@ void sp::PixelWindow::getNextEvent(Event& event)
         XAutoRepeatOn(m_display);
     else if(event.type == EventType::GainedFocus)
         XAutoRepeatOff(m_display);
+    else if(event.type == EventType::Resized)
+    {
+        XWindowAttributes attribs;
+        XGetWindowAttributes(m_display, m_window, &attribs);
+        int p_x, p_y;
+
+        //The window was resized
+        if (m_width != attribs.width || m_height != attribs.height)
+        {
+            m_width = attribs.width;
+            m_height = attribs.height;
+            setRenderSpaceSize(m_width, m_height);
+            return;
+        }
+
+        //The window was moved
+        Window child;
+        XTranslateCoordinates(m_display, m_window, DefaultRootWindow(m_display), 0, 0, &p_x, &p_y, &child);
+        if (m_x_pos != (p_x - attribs.x) || m_y_pos != (p_y - attribs.y))
+        {
+            m_x_pos = p_x - attribs.x;
+            m_y_pos = p_y - attribs.y;
+            event.type = Moved;
+        }
+    }
 }
 //-----------------------------------------------------
 
@@ -292,7 +316,7 @@ void sp::PixelWindow::close()
 void sp::PixelWindow::getNextEvent(Event& event)
 {
     m_firstMessage = false;
-    event.updateEventType();
+    event.updateEventyType();
 
     if (event.type == EventType::Close)
         m_running = false;

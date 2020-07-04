@@ -2,7 +2,6 @@
 #define _SP_PIXEL_
 #include "color.h"
 #include "spmath.h"
-#include "spmath.h"
 
 
 namespace sp
@@ -11,7 +10,7 @@ namespace sp
     class BitMap
 	{
     public:
-        BitMap() {}
+        BitMap() { m_pixelMap = nullptr; }
         BitMap(const vector2i& pos, const vector2i& size);
         ~BitMap() { }
 

@@ -21,9 +21,10 @@ sp::BitMap::BitMap(const vector2i& pos, const vector2i& size) :
 //-----------------------------------------------------
 sp::BitMap& sp::BitMap::operator=(BitMap bm)
 {
+    if(this->m_pixelMap != nullptr)
+        this->clear();                  //Delete last pixel_map
     this->m_startPos = bm.m_startPos;   //Copy position
     this->m_size = bm.m_size;           //Copy size
-    this->clear();                      //Delete last pixel_map
     this->m_pixelMap = bm.m_pixelMap;   //Copy ptr to pixel_map
     bm.m_pixelMap = nullptr;            //Delete pointer to pixel map
     return *this;
@@ -41,7 +42,6 @@ void sp::BitMap::marge(BitMap& bm)  //Margeing for one object
     calculateNewRect(bm, &new_pos, &new_sum_size);
     
     vector2i new_size = new_sum_size - new_pos;
-    
     BitMap marged =  BitMap(new_pos, new_size);
     //------------------------------
     //Margeing

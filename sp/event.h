@@ -17,7 +17,7 @@ enum EventType{
     LostFocus,
     GainedFocus,
     Resized,
-    Moved,  //Add to linux
+    Moved,
     Null
 };
 //-----------------------------------------------------

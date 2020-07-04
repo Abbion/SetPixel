@@ -3,6 +3,33 @@
 #include <chrono>
 #include <math.h>
 
+#include <unistd.h>
+#include <fstream>
+#include <string>
+#include <ios>
+
+void mem_usage(double& vm_usage, double& resident_set) {
+   vm_usage = 0.0;
+   resident_set = 0.0;
+   std::ifstream stat_stream("/proc/self/stat",std::ios_base::in); 
+   //create some variables to get info
+   std::string pid, comm, state, ppid, pgrp, session, tty_nr;
+   std::string tpgid, flags, minflt, cminflt, majflt, cmajflt;
+   std::string utime, stime, cutime, cstime, priority, nice;
+   std::string O, itrealvalue, starttime;
+   unsigned long vsize;
+   long rss;
+   stat_stream >> pid >> comm >> state >> ppid >> pgrp >> session >> tty_nr
+   >> tpgid >> flags >> minflt >> cminflt >> majflt >> cmajflt
+   >> utime >> stime >> cutime >> cstime >> priority >> nice
+   >> O >> itrealvalue >> starttime >> vsize >> rss;
+   stat_stream.close();
+   long page_size_kb = sysconf(_SC_PAGE_SIZE) / 1024;
+   vm_usage = vsize / 1024.0;
+   resident_set = rss * page_size_kb;
+}
+
+
 int main()
 {
 	sp::PixelWindow MyWindow(800, 600, "Set_pixel graphical lib");	//150, 100
@@ -14,16 +41,16 @@ int main()
 	bool sth = false;
 
 	//float testTriangle[] = {-0.5f, -0.5f, 0.0f, 0.5f, 0.5f, -0.5f }; 
-
 	float cx_1 = 0.0f;
 	float cy_1 = 0.0f;
 	float cx_2 = 0.0f;
 	float cy_2 = 0.0f;
 	float spped = 0.01f;
-
+	
 	sp::BitMap triangle[3] =   {sp::line(sp::vector2f(-0.5f, -0.5f), sp::vector2f(0.0f, 0.5f)),
-								sp::line(sp::vector2f(0.0f, 0.5f), sp::vector2f(0.5f, -0.5f)),
-								sp::line(sp::vector2f(0.5f, -0.5f), sp::vector2f(-0.5f, -0.5f))};
+									sp::line(sp::vector2f(0.0f, 0.5f), sp::vector2f(0.5f, -0.5f)),
+									sp::line(sp::vector2f(0.5f, -0.5f), sp::vector2f(-0.5f, -0.5f))};
+		
 	
 	while (MyWindow.isOpen())
 	{
@@ -43,6 +70,11 @@ int main()
 		{
 			MyWindow.setSize(900, 900);
 		}
+
+		double vm, rss;
+	    mem_usage(vm, rss);
+   		std::cout << "Virtual Memory: " << vm << "\nResident set size: " << rss << std::endl;
+
 
 		//sp::drawable dp_line = sp::lineLI(sp::vector2f(-0.5f, 0.5f), sp::vector2f(0.5f, -0.5f));
 
@@ -65,6 +97,7 @@ int main()
 		pixelTest.pixel_map[15] = 1;
 		*/
 		
+
 		float x_1 = std::cos(time) / 2;
 		float y_1 = std::sin(time) / 2;
 		float x_2 = 2 * std::cos(2 * time);
@@ -99,17 +132,18 @@ int main()
 			sth = !sth;
 			MyWindow.showFps(sth);
 		}
-
+		
 		//sp::BitMap lineTest = sp::line(sp::vector2f(-0.3f, 0.1f), sp::vector2f(0.3f, -0.1f));
 		sp::BitMap lineTest = sp::line(sp::vector2f(cx_1, cy_1), sp::vector2f(cx_2, cy_2));
 		//sp::BitMap lineTest2 = sp::line(sp::vector2f(x_1, y_1), sp::vector2f(x_2, y_2));
 		sp::BitMap lineTest2 = sp::line(sp::vector2f(-0.5f, 0.5f), sp::vector2f(0.5f, -0.5f));
 		lineTest2.marge(lineTest);
-
-
+		
+		
 		sp::BitMap triangle_marged;
 		triangle_marged.marge(triangle, 3);
 		triangle_marged.fill();
+		
 
 		MyWindow.clear();
 		//MyWindow.draw(lineTest);
@@ -118,7 +152,7 @@ int main()
 
 		lineTest.clear();
 		triangle_marged.clear();
-		//lineTest2.clear();
+		lineTest2.clear();
 		
 
 		time += 0.008f;

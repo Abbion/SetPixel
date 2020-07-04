@@ -23,6 +23,7 @@ void sp::Event::updateEventType()
         type = EventType::GainedFocus;
     break;
 
+    //The Move and Resize event is called by the same event so we decide with one it is in the getNextEvent in window class
     case ConfigureNotify:
         type = EventType::Resized;
     break;
