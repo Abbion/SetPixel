@@ -19,10 +19,6 @@ int main()
 	float cx_2 = 0.0f;
 	float cy_2 = 0.0f;
 	float spped = 0.01f;
-
-	sp::BitMap triangle[3] =   {sp::line(sp::vector2f(-0.5f, -0.5f), sp::vector2f(0.0f, 0.5f)),
-								sp::line(sp::vector2f(0.0f, 0.5f), sp::vector2f(0.5f, -0.5f)),
-								sp::line(sp::vector2f(0.5f, -0.5f), sp::vector2f(-0.5f, -0.5f))};
 	
 	while (MyWindow.isOpen())
 	{
@@ -98,26 +94,31 @@ int main()
 			sth = !sth;
 			MyWindow.showFps(sth);
 		}
-
+		
 		//sp::BitMap lineTest = sp::line(sp::vector2f(-0.3f, 0.1f), sp::vector2f(0.3f, -0.1f));
-		sp::BitMap lineTest = sp::line(sp::vector2f(cx_1, cy_1), sp::vector2f(cx_2, cy_2));
+		//sp::BitMap lineTest = sp::line(sp::vector2f(cx_1, cy_1), sp::vector2f(cx_2, cy_2));
 		//sp::BitMap lineTest2 = sp::line(sp::vector2f(x_1, y_1), sp::vector2f(x_2, y_2));
-		sp::BitMap lineTest2 = sp::line(sp::vector2f(-0.5f, 0.5f), sp::vector2f(0.5f, -0.5f));
-		lineTest2.marge(lineTest);
+		//sp::BitMap lineTest2 = sp::line(sp::vector2f(-0.5f, 0.5f), sp::vector2f(0.5f, -0.5f));
+		//lineTest2.marge(lineTest);
 
+		sp::BitMap triangle[4] =   {sp::line(sp::vector2f(-0.5f, -0.5f), sp::vector2f(-0.5f, 0.5f)),
+									sp::line(sp::vector2f(-0.5f, 0.5f), sp::vector2f(0.5f, 0.5f)),
+									sp::line(sp::vector2f(0.5f, 0.5f), sp::vector2f(0.5f, -0.5f)),
+									sp::line(sp::vector2f(0.5f, -0.5f), sp::vector2f(-0.5f, -0.5f))};
 
 		sp::BitMap triangle_marged;
-		triangle_marged.marge(triangle, 3);
+		triangle_marged.marge(triangle, 4);
 		triangle_marged.fill();
-
+		
 		MyWindow.clear();
 		//MyWindow.draw(lineTest);
+		//MyWindow.draw(lineTest2);
 		MyWindow.draw(triangle_marged);;
 		MyWindow.display();
 
-		lineTest.clear();
-		triangle_marged.clear();
+		//lineTest.clear();
 		//lineTest2.clear();
+		triangle_marged.clear();
 		
 
 		time += 0.008f;

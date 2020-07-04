@@ -64,7 +64,7 @@ public:
         m_buttonQueue.clear();
     }
 
-    void updateEventyType();
+    void updateEventType();
     unsigned int getSystemEventPointer();
     int getSystemKey() const;       //Warning: only WIN32 implementation
     int getSystemButton() const;    //Warning: only WIN32 implementation

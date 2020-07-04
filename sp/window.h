@@ -36,9 +36,9 @@ public:
 
     #if _WIN32
     HWND* getWindowHandle() { return &m_window; }   //Returns the window pointer.
+    friend class Event;
     #endif
 
-    friend class Event;
 
 private:
     void setIcon();

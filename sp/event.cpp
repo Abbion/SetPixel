@@ -60,7 +60,7 @@ std::vector<int> sp::Event::m_buttonQueue;
 
 
 //-----------------------------------------------------
-void sp::Event::updateEventyType()
+void sp::Event::updateEventType()
 {
     switch (m_messageQueue.at(m_messageQueue.size() - 1))
     {

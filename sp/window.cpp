@@ -292,7 +292,7 @@ void sp::PixelWindow::close()
 void sp::PixelWindow::getNextEvent(Event& event)
 {
     m_firstMessage = false;
-    event.updateEventyType();
+    event.updateEventType();
 
     if (event.type == EventType::Close)
         m_running = false;
