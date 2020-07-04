@@ -344,7 +344,7 @@ void sp::Renderer::draw(const BitMap& bitMap)
 void sp::Renderer::display()
 {
     Gdiplus::Graphics graphics(m_windowContext);
-    m_backRenderer->DrawImage(m_bitmap, 0, 0);      //Wierd memeory usage picks 🤔
+    //m_backRenderer->DrawImage(m_bitmap, 0, 0);      //Wierd memeory usage picks 🤔
     if(m_showFps)
     {
         displayFps(graphics);

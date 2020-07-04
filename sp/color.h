@@ -11,8 +11,8 @@ namespace sp {
         Color(uint8 r, uint8 g, uint8 b, uint8 a = 255);
         Color();
 
-        unsigned long getHexRGB() const;
-        unsigned long getHexBGR() const;    //A windows thing
+        unsigned long getHexRGB() const;    //Returns the color in HexRGB format
+        unsigned long getHexBGR() const;    //Returns the color in HexBGR format. A windows thing.
 
         bool operator!=(const Color& col) const;
     

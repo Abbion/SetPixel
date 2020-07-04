@@ -9,7 +9,7 @@ sp::BitMap::BitMap(const vector2i& pos, const vector2i& size) :
     m_size.x += 1;  //Fix this to be without += 1
     m_size.y += 1;
     int full_size = m_size.x * m_size.y;
-
+ 
     m_pixelMap = new bool[full_size];
 
     memset(m_pixelMap, 0, full_size);    //Clear pixelMap
@@ -23,6 +23,7 @@ sp::BitMap& sp::BitMap::operator=(BitMap bm)
 {
     this->m_startPos = bm.m_startPos;   //Copy position
     this->m_size = bm.m_size;           //Copy size
+    this->clear();                      //Delete last pixel_map
     this->m_pixelMap = bm.m_pixelMap;   //Copy ptr to pixel_map
     bm.m_pixelMap = nullptr;            //Delete pointer to pixel map
     return *this;
@@ -40,14 +41,13 @@ void sp::BitMap::marge(BitMap& bm)  //Margeing for one object
     calculateNewRect(bm, &new_pos, &new_sum_size);
     
     vector2i new_size = new_sum_size - new_pos;
+    
     BitMap marged =  BitMap(new_pos, new_size);
     //------------------------------
-
     //Margeing
     margeToBitMap(marged, *this);
     margeToBitMap(marged, bm);
     //------------------------------
-
     *this = marged;
 }
 //-----------------------------------------------------
@@ -63,7 +63,7 @@ void sp::BitMap::marge(BitMap* bm, int obj_count)   //Margeing for many objects
     calculateNewRect(bm, obj_count, &new_pos, &new_sum_size);
     
     vector2i new_size = new_sum_size - new_pos;
-    BitMap marged =  BitMap(new_pos, new_size);
+    BitMap marged = BitMap(new_pos, new_size);
     //-------------------------------
 
     //std::cout << "P_x: " << new_pos.x << " y: " << new_pos.y << " \tS_x: " << new_size.x << " y: " << new_size.y << std::endl;
@@ -73,7 +73,6 @@ void sp::BitMap::marge(BitMap* bm, int obj_count)   //Margeing for many objects
     for (int i = 0; i < obj_count; i++)
         margeToBitMap(marged, bm[i]);
     //------------------------------
-
     *this = marged;
 }
 //-----------------------------------------------------
