@@ -74,7 +74,8 @@ private:
     static void clearRepeated();
 
 private:
-    static std::vector<unsigned int> m_messageQueue;    //Change to queue
+    //Change to std::queue???
+    static std::vector<unsigned int> m_messageQueue;
     static std::vector<int> m_keyQueue;
     static std::vector<int> m_buttonQueue;
 };

@@ -347,7 +347,7 @@ void sp::Renderer::draw(const BitMap& bitMap)
     {
         for (int p_x = 0; p_x < bitMap.m_size.x; p_x++)
         {
-            if(bitMap.m_pixelMap[bitPixel])
+            if(bitMap.m_pixelPosMap[bitPixel])
             {
                 for (int i = 0; i < m_pixelSize; i++)
                 {

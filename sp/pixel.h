@@ -2,7 +2,7 @@
 #define _SP_PIXEL_
 #include "color.h"
 #include "spmath.h"
-
+#include <vector>
 
 namespace sp
 {   
@@ -10,12 +10,15 @@ namespace sp
     class BitMap
 	{
     public:
-        BitMap() { m_pixelMap = nullptr; }
+        BitMap();
         BitMap(const vector2i& pos, const vector2i& size);
-        ~BitMap() { }
+        ~BitMap();
+
 
         BitMap& operator=(BitMap bm);
+        void clear();
 
+        //Do constant check and pointer to & check
         void marge(BitMap& bm);
         void marge(BitMap* bm, int obj_count);
         void calculateNewRect(const BitMap& bm, sp::vector2i* pos, sp::vector2i* size);
@@ -25,10 +28,8 @@ namespace sp
         void fill();
         void fillLine(int start, int end);
 
-        void clear() { delete[] m_pixelMap; }
-
     public:
-        bool* m_pixelMap;
+        bool* m_pixelPosMap;
         vector2i m_startPos;
 		vector2i m_size;
 	};

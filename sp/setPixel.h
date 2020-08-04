@@ -9,5 +9,8 @@
 #include "mouse.h"
 
 #include "spgraphics.h"
+#include "spGfxLine.h"
+#include "spGfxCurveLine.h"
+#include "spGfxShapes.h"
 
 #endif

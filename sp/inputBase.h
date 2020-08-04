@@ -15,5 +15,4 @@ struct InputStates
 typedef std::map<unsigned int, InputStates> InputStateMap;
 }
 
-
 #endif

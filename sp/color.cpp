@@ -1,7 +1,7 @@
 #include "color.h"
 
 //-----------------------------------------------------
-sp::Color::Color(uint8 r, uint8 g, uint8 b, uint8 a) : 
+sp::Color::Color(SP_UINT8 r, SP_UINT8 g, SP_UINT8 b, SP_UINT8 a) :
     red(r), green(g), blue(b), alpha(a)
 {
 }
