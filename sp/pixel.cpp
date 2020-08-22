@@ -3,11 +3,9 @@
 #include <string.h>
 
 //==============BITMAP==============
-
 sp::BitMap::BitMap() :
     m_startPos(sp::vector2i(0, 0)) , m_size(sp::vector2i(0, 0)), m_pixelPosMap(nullptr)
 {
-    
 }
 
 
@@ -22,28 +20,40 @@ sp::BitMap::BitMap(const vector2i& pos, const vector2i& size) :
     memset(m_pixelPosMap, 0, full_size);    //Clear pixelMap
 }
 
+
+sp::BitMap::BitMap(const BitMap& bm)
+{
+    this->m_startPos = bm.m_startPos;                   //Copy position
+    this->m_size = bm.m_size;                           //Copy size
+    this->m_pixelPosMap = bm.m_pixelPosMap;             //Copy ptr to pixel_map
+    const_cast<BitMap*>(&bm)->m_pixelPosMap = nullptr;  //Delete pointer to pixel map
+}
+
 sp::BitMap::~BitMap()
 {
+    clear();
 }
 //-----------------------------------------------------
 
 
 //-----------------------------------------------------
-sp::BitMap& sp::BitMap::operator=(BitMap bm)
+sp::BitMap& sp::BitMap::operator=(const BitMap& bm)
 {
     this->clear();                                      //Delete last pixel_map
     this->m_startPos = bm.m_startPos;                   //Copy position
     this->m_size = bm.m_size;                           //Copy size
     this->m_pixelPosMap = bm.m_pixelPosMap;             //Copy ptr to pixel_map
-    bm.m_pixelPosMap = nullptr;                         //Delete pointer to pixel map
+    const_cast<BitMap*>(&bm)->m_pixelPosMap = nullptr;  //Delete pointer to pixel map
     return *this;
 }
 //-----------------------------------------------------
 
 void sp::BitMap::clear()
 {
-    if(m_pixelPosMap != nullptr)
+    if(m_pixelPosMap != nullptr){
         delete[] m_pixelPosMap;
+        m_pixelPosMap = nullptr;
+    }
 }
 
 //-----------------------------------------------------
@@ -184,7 +194,7 @@ void sp::BitMap::margeToBitMap(BitMap& target, BitMap& bm)
 //-----------------------------------------------------
 
 
-
+/*
 //-----------------------------------------------------
 void sp::BitMap::fill()
 {
@@ -226,7 +236,7 @@ void sp::BitMap::fillLine(int start, int end)
         m_pixelPosMap[i] = 1;    
 }
 //-----------------------------------------------------
-
+*/
 
 
 

@@ -1,0 +1,265 @@
+﻿  color.cpp
+  event.cpp
+E:\Silniki\3. SetPixel\sp\event.cpp(160,1): error C2556: 'long sp::Event::WindowProcedure(HWND,unsigned int,WPARAM,LPARAM)': overloaded function differs only by return type from 'LRESULT sp::Event::WindowProcedure(HWND,unsigned int,WPARAM,LPARAM)'
+E:\Silniki\3. SetPixel\sp\event.h(73): message : see declaration of 'sp::Event::WindowProcedure'
+E:\Silniki\3. SetPixel\sp\event.cpp(159,27): error C2371: 'sp::Event::WindowProcedure': redefinition; different basic types
+E:\Silniki\3. SetPixel\sp\event.h(73): message : see declaration of 'sp::Event::WindowProcedure'
+E:\Silniki\3. SetPixel\sp\event.cpp(190,24): warning C4244: 'initializing': conversion from 'LPARAM' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\event.cpp(192,34): warning C4244: 'argument': conversion from 'WPARAM' to 'const _Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+  keyboard.cpp
+  mouse.cpp
+  pixel.cpp
+E:\Silniki\3. SetPixel\sp\spmath.h(144,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spmath.h(153,9): warning C4984: 'if constexpr' is a C++17 language extension
+  renderer.cpp
+E:\Silniki\3. SetPixel\sp\spmath.h(144,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spmath.h(153,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\renderer.cpp(352,35): warning C4018: '<': signed/unsigned mismatch
+E:\Silniki\3. SetPixel\sp\renderer.cpp(356,39): warning C4018: '<': signed/unsigned mismatch
+E:\Silniki\3. SetPixel\sp\renderer.cpp(448,21): warning C4244: 'initializing': conversion from '_Rep' to 'int', possible loss of data
+          with
+          [
+              _Rep=__int64
+          ]
+E:\Silniki\3. SetPixel\sp\renderer.cpp(451,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\renderer.cpp(453,17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\renderer.cpp(466,37): warning C4244: 'argument': conversion from 'int' to 'Gdiplus::REAL', possible loss of data
+E:\Silniki\3. SetPixel\sp\renderer.cpp(473,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  rendererBase.cpp
+E:\Silniki\3. SetPixel\sp\spmath.h(144,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spmath.h(153,9): warning C4984: 'if constexpr' is a C++17 language extension
+  spGfxCurveLine.cpp
+E:\Silniki\3. SetPixel\sp\spmath.h(144,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spmath.h(153,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spGfxCurveLine.cpp(19,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxCurveLine.cpp(33,117): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxCurveLine.cpp(33,65): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxCurveLine.cpp(78,15): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxCurveLine.cpp(94,86): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxCurveLine.cpp(93,86): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxCurveLine.cpp(191,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxCurveLine.cpp(192,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  spGfxLine.cpp
+E:\Silniki\3. SetPixel\sp\spmath.h(144,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spmath.h(153,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(13,56): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(13,29): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(14,60): warning C4244: 'argument': conversion from 'const _Ty' to 'T', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+          and
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(14,34): warning C4244: 'argument': conversion from 'const _Ty' to 'T', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+          and
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(30,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(31,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(50,56): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(50,29): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(51,60): warning C4244: 'argument': conversion from 'const _Ty' to 'T', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+          and
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(51,34): warning C4244: 'argument': conversion from 'const _Ty' to 'T', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+          and
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(100,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(103,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(105,21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(134,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(137,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(139,21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(169,49): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(169,40): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(170,45): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(170,38): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+          and
+          [
+              T=float
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(172,56): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(172,29): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(173,60): warning C4244: 'argument': conversion from 'const _Ty' to 'T', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+          and
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(173,34): warning C4244: 'argument': conversion from 'const _Ty' to 'T', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+          and
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(213,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(216,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(218,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(247,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(250,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spGfxLine.cpp(252,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  spGfxShapes.cpp
+E:\Silniki\3. SetPixel\sp\spmath.h(144,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spmath.h(153,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spGfxShapes.cpp(34,77): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxShapes.cpp(34,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxShapes.cpp(36,77): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+E:\Silniki\3. SetPixel\sp\spGfxShapes.cpp(36,69): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  spgraphics.cpp
+E:\Silniki\3. SetPixel\sp\spmath.h(144,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spmath.h(153,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spgraphics.cpp(10,15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+E:\Silniki\3. SetPixel\sp\spgraphics.cpp(11,15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  spmath.cpp
+E:\Silniki\3. SetPixel\sp\spmath.h(144,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spmath.h(153,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spmath.cpp(17,93): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spmath.cpp(17,51): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spmath.cpp(23,85): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+E:\Silniki\3. SetPixel\sp\spmath.cpp(23,54): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+          and
+          [
+              T=int
+          ]
+  window.cpp
+E:\Silniki\3. SetPixel\sp\spmath.h(144,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\spmath.h(153,9): warning C4984: 'if constexpr' is a C++17 language extension
+E:\Silniki\3. SetPixel\sp\window.cpp(393,40): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  windowBase.cpp
+  main.cpp
+E:\Silniki\3. SetPixel\Windows\SetPixel\main.cpp(1,10): fatal error C1083: Cannot open include file: 'setPixel.h': No such file or directory
+  Generating Code...

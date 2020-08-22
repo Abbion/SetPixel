@@ -417,7 +417,7 @@ void sp::Renderer::setRenderSpaceSize(int width, int height)
     coordConverter::m_renderWidth = m_windowSpaceWidth / m_pixelSize;
     coordConverter::m_renderHeight = m_windowSpaceHeight / m_pixelSize; 
 
-     if(m_pixelMap)
+     if(m_pixelMap != nullptr)
      {
         delete[] m_pixelMap;
         delete m_bitmap;
@@ -433,7 +433,7 @@ void sp::Renderer::setRenderSpaceSize(int width, int height)
     m_bitmap = new Gdiplus::Bitmap(m_windowSpaceWidth, m_windowSpaceHeight, m_stride, PixelFormat24bppRGB, m_pixelMap);
 
     //m_backBitmap = new Gdiplus::Bitmap(m_windowSpaceWidth, m_windowSpaceHeight);
-    //m_backRenderer = Gdiplus::Graphics::FromImage(m_backBitmap);    //It's a fucking secred memory allocation 🤬
+    //m_backRenderer = Gdiplus::Graphics::FromImage(m_backBitmap);    //Wier memory usage picks
     m_backRenderer = Gdiplus::Graphics::FromImage(m_bitmap);
 }
 //-----------------------------------------------------
@@ -477,6 +477,7 @@ void sp::Renderer::displayFps(Gdiplus::Graphics& graphics)
 
     m_backRenderer->FillRectangle(&background, 0, 0, (fontSize / 2) * (size), fontSize + 8);
     m_backRenderer->DrawString(string1, -1, &font, Gdiplus::PointF(1.0f, 4.0f), &fontColor);
+    delete[] string1;
 }
 //-----------------------------------------------------
 #endif

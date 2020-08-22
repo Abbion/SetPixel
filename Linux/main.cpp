@@ -50,6 +50,11 @@ int main()
 	sp::BitMap triangle[3] =   {sp::line(sp::vector2f(-0.5f, -0.5f), sp::vector2f(0.0f, 0.5f)),
 									sp::line(sp::vector2f(0.0f, 0.5f), sp::vector2f(0.5f, -0.5f)),
 									sp::line(sp::vector2f(0.5f, -0.5f), sp::vector2f(-0.5f, -0.5f))};
+
+	sp::vector2i test(2, 2);
+	std::cout << test.x << ", " << test.y << std::endl;
+	test += sp::vector2i(2, 1);
+	std::cout << test.x << ", " << test.y << std::endl;
 		
 	
 	while (MyWindow.isOpen())

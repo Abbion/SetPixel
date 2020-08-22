@@ -4,15 +4,19 @@
 #include <cstdarg>
 #include <iostream>
 
-namespace sp {
+#define _USE_MATH_DEFINES
+#include <math.h>
 
+namespace sp {
+ 
+    //Vector 2------------------
     template<typename T>
     struct vector2
     {
         vector2(T v_x, T v_y) { x = v_x; y = v_y; }
         vector2()             { x = 0; y = 0; }
 
-        vector2 operator+(vector2& vec_2)
+        vector2 operator+(const vector2& vec_2)
         {
             vector2 sum;
             sum.x = this->x + vec_2.x;
@@ -20,7 +24,7 @@ namespace sp {
             return sum;
         }
 
-        vector2 operator-(vector2& vec_2)
+        vector2 operator-(const vector2& vec_2)
         {
             vector2 sub;
             sub.x = this->x - vec_2.x;
@@ -28,18 +32,38 @@ namespace sp {
             return sub;
         }
 
-        bool operator!=(vector2& vec_2)
+        vector2& operator-=(const vector2& vec_2)
+        {
+            this->x -= vec_2.x;
+            this->y -= vec_2.y;
+            return *this;    
+        }
+
+        vector2& operator+=(const vector2& vec2)
+        {
+            this->x += vec2.x;
+            this->y += vec2.y;
+            return *this;
+        }
+
+        bool operator!=(const vector2& vec_2)
         {
             if(x != vec_2.x || y != vec_2.y)
                 return true;
             return false;
         }
 
-        void scale(SP_FLOAT scale) { x *= scale; y *= scale; }
-        
-        SP_FLOAT length() { return std::sqrt(x * x + y * y); }
+        bool operator==(const vector2& vec_2)
+        {
+            if(x == vec_2.x && y == vec_2.y)
+                return true;
+            return false;
+        }
 
-        SP_FLOAT distance(vector2 vec_2) 
+        void scale(const SP_FLOAT scale)    { x *= scale; y *= scale; }
+        SP_FLOAT length()                   { return std::sqrt(x * x + y * y); }
+
+        SP_FLOAT distance(const vector2& vec_2) 
         {
             vector2 sub(x - vec_2.x, y - vec_2.y);
             return sub.length();
@@ -59,7 +83,10 @@ namespace sp {
 
     typedef vector2<int> vector2i;
     typedef vector2<float> vector2f;
+    //--------------------------
 
+
+    //Vector 3------------------
     template<typename T>
     struct vector3
     {
@@ -108,24 +135,25 @@ namespace sp {
 
     typedef vector3<int> vector3i;
     typedef vector3<float> vector3f;
+    //--------------------------
     
 
-    //Coordinate converter
+    //Coordinate converter------
     struct coordConverter
     {
-        static vector2f normalToViewF(const vector2f& normal);
-        static vector2i normalToViewI(const vector2f& normal);
+        static vector2f normalToViewPosF(const vector2f& normal);
+        static vector2i normalToViewPosI(const vector2f& normal);
+        static vector2i nromalToViewSizeI(const vector2f& normal);
 
         static int m_renderWidth, m_renderHeight;
     };
-    //----------------
+    //--------------------------
     
     template<typename T, typename ...Args>
     auto minOf(T next, Args... args)
     {
         if constexpr(sizeof...(Args) > 0)
             return next < minOf(args...) ? next : minOf(args...);
-
         return next;
     }
 
@@ -134,7 +162,6 @@ namespace sp {
     {
         if constexpr (sizeof...(Args) > 0)
             return next > maxOf(args...) ? next : maxOf(args...);
-
         return next;
     }
 };

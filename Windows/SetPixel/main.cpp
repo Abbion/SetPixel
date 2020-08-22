@@ -4,7 +4,7 @@
 
 int main()
 {
-	sp::PixelWindow MyWindow(800, 600, "Set_pixel graphical lib");	//150, 100
+	sp::PixelWindow MyWindow(800, 600, "Set_pixel graphical lib");
 	sp::Event event;
 
 	MyWindow.setPixelSize(4);
@@ -22,6 +22,7 @@ int main()
 	double pos_x2 = 0.4;
 	double pos_y2 = -0.5;
 	MyWindow.showFps(true);
+
 
 	while (MyWindow.isOpen())
 	{
@@ -55,21 +56,13 @@ int main()
 		if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::Down))
 			pos_y2 -= 0.01;
 
-		//sp::BitMap lineTest = sp::lineLI(sp::vector2f(-0.5f, 0.0f), sp::vector2f(0.5f, 0.0f));
-		//sp::QuadraticBezier bezTest(sp::vector2f(-0.5, 0.0), sp::vector2f(0.5, 0.0), sp::vector2f(pos_x, pos_y));
-		//bezTest.drawControlPoints();
-		sp::CubicBezier bezTest(sp::vector2f(-0.5, 0.0), sp::vector2f(0.5, 0.0), sp::vector2f(pos_x, pos_y), sp::vector2f(pos_x2, pos_y2), 8);
-		bezTest.drawControlPoints();
-		//sp::BitMap rectTest = sp::Rectangle(sp::vector2f(-0.5f, 0.5f), sp::vector2f(1.0f, 1.0f));
-		//sp::BitMap linetest = sp::line(sp::vector2f(-0.3f, -0.7f), sp::vector2f(0.3f, 0.7f));
-		sp::BitMap circleTest = sp::Circle(sp::vector2f(0.0, 0.0), 0.2);
+
+		sp::BitMap triangleTest = sp::Triangle(sp::vector2f(-0.5f, -0.5f), sp::vector2f(0.5f, -0.5f), sp::vector2f(0.0f, 0.5f));
 
 		MyWindow.clear();
-		//MyWindow.draw(bezTest.getDrawable());
-		MyWindow.draw(circleTest);
+		MyWindow.draw(triangleTest);
 		MyWindow.display();
-		time += 0.01f;
-
+		time += 0.001f;
 	}
 
 	return 0;

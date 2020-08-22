@@ -12,21 +12,20 @@ namespace sp
     public:
         BitMap();
         BitMap(const vector2i& pos, const vector2i& size);
+        BitMap(const BitMap& bm);
         ~BitMap();
 
-
-        BitMap& operator=(BitMap bm);
+        BitMap& operator=(const BitMap& bm);
         void clear();
 
-        //Do constant check and pointer to & check
         void marge(BitMap& bm);
         void marge(BitMap* bm, int obj_count);
         void calculateNewRect(const BitMap& bm, sp::vector2i* pos, sp::vector2i* size);
         void calculateNewRect(const BitMap* bm, int obj_count, sp::vector2i* pos, sp::vector2i* size);
-        void margeToBitMap(BitMap& target, BitMap& bm);
+        void margeToBitMap(BitMap& target, BitMap& bm); //Const for bm?
 
-        void fill();
-        void fillLine(int start, int end);
+        //void fill();
+        //void fillLine(int start, int end);
 
     public:
         bool* m_pixelPosMap;

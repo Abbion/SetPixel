@@ -61,7 +61,7 @@ class Renderer : public RendererBase
 public:
     Renderer();
     ~Renderer();
-    virtual void setClearColor(Color& col);
+    virtual void setClearColor(Color& col); //Why can't I const this???
 
     virtual void clear();
     virtual void draw(const Pixel& drawablePixel);

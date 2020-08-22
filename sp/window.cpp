@@ -338,7 +338,7 @@ void sp::PixelWindow::getNextEvent(Event& event)
 
             this->setRenderSpaceSize(m_width, m_height);
 
-            //std::cout << "X: " << m_width << " Y: " << m_height << std::endl;
+            std::cout << "X: " << m_width << " Y: " << m_height << std::endl;
         }
     }
 
@@ -351,9 +351,15 @@ void sp::PixelWindow::getNextEvent(Event& event)
         {
             m_x_pos = windowRect.left;
             m_y_pos = windowRect.top;
-            m_width = windowRect.right - windowRect.left;
-            m_height = windowRect.bottom - windowRect.top;
-            this->setRenderSpaceSize(m_width, m_height);
+
+            RECT windowClinetRect;
+            GetClientRect(m_window, &windowClinetRect);
+            if (m_width != windowClinetRect.right || m_height != windowClinetRect.bottom)
+            {
+                m_width = windowClinetRect.right - windowClinetRect.left;
+                m_height = windowClinetRect.bottom - windowClinetRect.top;
+                this->setRenderSpaceSize(m_width, m_height);
+            }
         }
     }
 }
