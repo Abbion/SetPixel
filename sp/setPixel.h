@@ -3,10 +3,11 @@
 
 #include "event.h"
 #include "window.h"
-#include "color.h"
-#include "pixel.h"
 #include "keyboard.h"
 #include "mouse.h"
+
+#include "color.h"
+#include "pixel.h"
 
 #include "spgraphics.h"
 #include "spGfxLine.h"

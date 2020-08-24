@@ -125,7 +125,7 @@ void sp::BitMap::calculateNewRect(const BitMap& bm, sp::vector2i* pos, sp::vecto
 
         
     //Comparing down corners
-    int temp_size_sum = bm.m_size.x + bm.m_startPos.x; 
+    int temp_size_sum = bm.m_size.x + bm.m_startPos.x;
     if(temp_size_sum > size->x)
         size->x = temp_size_sum;
 

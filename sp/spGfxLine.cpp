@@ -9,7 +9,6 @@ sp::BitMap sp::lineLI(vector2f start, vector2f end)	//Linear interpolation line 
 
 	sp::vector2f vc_s = coordConverter::normalToViewPosF(start);	//vc view coordinates
 	sp::vector2f vc_e = coordConverter::normalToViewPosF(end);
-
 	vector2i line_size(std::abs(vc_s.x - vc_e.x), std::abs(vc_s.y - vc_e.y));
 	vector2i line_start_pos(std::min(vc_s.x, vc_e.x), std::min(vc_s.y, vc_e.y));
 
@@ -44,9 +43,10 @@ sp::BitMap sp::lineLI(vector2f start, vector2f end)	//Linear interpolation line 
 
 sp::BitMap sp::line(vector2f start, vector2f end)
 {
-	sp::vector2f vc_s = coordConverter::normalToViewPosF(start);
-	sp::vector2f vc_e = coordConverter::normalToViewPosF(end);
-
+	sp::vector2i vc_s = coordConverter::normalToViewPosI(start);
+	sp::vector2i vc_e = coordConverter::normalToViewPosI(end);
+	return sp::line(vc_s, vc_e);
+	/*
 	vector2i line_size(std::abs(vc_s.x - vc_e.x), std::abs(vc_s.y - vc_e.y));
 	vector2i line_start_pos(std::min(vc_s.x, vc_e.x), std::min(vc_s.y, vc_e.y));
 
@@ -162,6 +162,7 @@ sp::BitMap sp::line(vector2f start, vector2f end)
 		}
 		return line_segment;	
 	}
+	*/
 }
 
 sp::BitMap sp::line(vector2i start, vector2i end)

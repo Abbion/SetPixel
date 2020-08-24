@@ -50,6 +50,7 @@ void sp::Renderer::setRenderSpaceSize(int width, int height)
 {
     m_windowSpaceWidth = width;
     m_windowSpaceHeight = height;
+
     coordConverter::m_renderWidth = m_windowSpaceWidth / m_pixelSize;
     coordConverter::m_renderHeight = m_windowSpaceHeight / m_pixelSize;
 
@@ -83,6 +84,7 @@ void sp::Renderer::clear()
 //-----------------------------------------------------
 void sp::Renderer::draw(const Pixel& drawablePixel)
 {
+    /*
     for (int i = 0; i < m_pixelSize; i++)
     {
         int Ypos = (drawablePixel.getPosition().y * m_pixelSize) + i;
@@ -95,6 +97,7 @@ void sp::Renderer::draw(const Pixel& drawablePixel)
             }
         }    
     }
+    */
 }
 //-----------------------------------------------------
 
@@ -103,6 +106,7 @@ void sp::Renderer::draw(const Pixel& drawablePixel)
 //-----------------------------------------------------
 void sp::Renderer::drawSet(Pixel* drawablePixelSet, int pixCount)
 {
+    /*
     for (int k = 0; k < pixCount; k++)
     {
         for (int i = 0; i < m_pixelSize; i++)
@@ -119,6 +123,7 @@ void sp::Renderer::drawSet(Pixel* drawablePixelSet, int pixCount)
             }    
         }
     }
+    */
 }
 //-----------------------------------------------------
 
@@ -134,7 +139,7 @@ void sp::Renderer::draw(const BitMap& bitMap)
     {
         for (int p_x = 0; p_x < bitMap.m_size.x; p_x++)
         {
-            if(bitMap.m_pixelMap[bitPixel])
+            if(bitMap.m_pixelPosMap[bitPixel])
             {
                 for (int i = 0; i < m_pixelSize; i++)
                 {

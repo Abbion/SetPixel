@@ -149,14 +149,13 @@ void sp::PixelWindow::getNextEvent(Event& event)
         XWindowAttributes attribs;
         XGetWindowAttributes(m_display, m_window, &attribs);
         int p_x, p_y;
-
+        
         //The window was resized
         if (m_width != attribs.width || m_height != attribs.height)
         {
             m_width = attribs.width;
             m_height = attribs.height;
             setRenderSpaceSize(m_width, m_height);
-            return;
         }
 
         //The window was moved

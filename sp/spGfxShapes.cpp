@@ -7,6 +7,7 @@
 sp::BitMap sp::Triangle(sp::vector2f p1, sp::vector2f p2, sp::vector2f p3)
 {
    sp::BitMap bm;
+   
    sp::BitMap triangle_sides[3] = {sp::line(p1, p2), sp::line(p2, p3), sp::line(p3, p1)};
    bm.marge(triangle_sides, 3);
    return bm;
