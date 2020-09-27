@@ -13,8 +13,8 @@ sp::BitMap sp::QuadraticBezier(const sp::vector2f& start, const sp::vector2f& en
     //--------------------------
 
     //Calculate the step--------
-    SP_FLOAT maxLength = p1.distance(ctrl);
-    maxLength += ctrl.distance(p2);
+    SP_FLOAT maxLength = sp::getDistance(p1, ctrl);
+    maxLength += sp::getDistance(ctrl, p2);
 
     int lines = maxLength / precision;
     SP_FLOAT step = 1.0 / lines;
@@ -69,9 +69,9 @@ sp::BitMap sp::CubicBezier(const sp::vector2f& start, const sp::vector2f& end, c
     //--------------------------
     
     //Calculate the step--------
-    SP_FLOAT maxLength = p1.distance(ctrl1);
-    maxLength += ctrl1.distance(ctrl2);
-    maxLength += ctrl2.distance(p2);
+    SP_FLOAT maxLength = sp::getDistance(p1, ctrl1);
+    maxLength += sp::getDistance(ctrl1, ctrl2);
+    maxLength += sp::getDistance(ctrl2, p2);
 
     int lines = maxLength / precision;
     SP_FLOAT step = 1.0 / lines;

@@ -9,9 +9,15 @@
 #include "color.h"
 #include "pixel.h"
 
-#include "spgraphics.h"
+#include "spmath.h"
+#include "spAlgorithms.h"
+
+#include "spCamera.h"
+
 #include "spGfxLine.h"
 #include "spGfxCurveLine.h"
 #include "spGfxShapes.h"
+
+#include "spFileLoader.h"
 
 #endif

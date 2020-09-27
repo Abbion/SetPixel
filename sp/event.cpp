@@ -113,7 +113,7 @@ int sp::Event::getSystemKey() const
 {
     if (!m_keyQueue.empty())
     {
-        int key = m_keyQueue.at(m_messageQueue.size() - 1);
+        int key = m_keyQueue.at(m_keyQueue.size() - 1);
         m_keyQueue.pop_back();
         return key;
     }
@@ -158,7 +158,6 @@ void sp::Event::clearRepeated()
 //-----------------------------------------------------
 long __stdcall sp::Event::WindowProcedure(HWND window, unsigned int msg, WPARAM wp, LPARAM lp)
 {
-    
     switch (msg)
     {
     case WM_CLOSE:
@@ -186,10 +185,17 @@ long __stdcall sp::Event::WindowProcedure(HWND window, unsigned int msg, WPARAM 
     case WM_KEYUP:
     {
         m_messageQueue.push_back(msg);
-        
         int repeatTest = (lp >> 30);        //Testing if the key repeats press message.
-        if(repeatTest != 1)
+        bool posDetector = (lp >> 24) & 0x1;       //Test if the (control, alt) is the left or the rght one
+        int shiftPosDetector = (lp & 0x00ff0000) >> 16;    //Test if the right or left shift is pressed 
+
+        if (wp == VK_CONTROL)       wp = posDetector ? VK_RCONTROL : VK_LCONTROL;
+        else if (wp == VK_MENU)     wp = posDetector ? VK_RMENU : VK_LMENU;
+        else if (wp == VK_SHIFT)    wp = MapVirtualKey(shiftPosDetector, MAPVK_VSC_TO_VK_EX);
+
+        if(repeatTest != 1){
             m_keyQueue.push_back(wp);
+        }
     }
         break;
 

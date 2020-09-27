@@ -24,8 +24,8 @@ namespace sp
         void calculateNewRect(const BitMap* bm, int obj_count, sp::vector2i* pos, sp::vector2i* size);
         void margeToBitMap(BitMap& target, BitMap& bm); //Const for bm?
 
-        //void fill();
-        //void fillLine(int start, int end);
+        void fill();
+        void fillLine(int start, int end);
 
     public:
         bool* m_pixelPosMap;

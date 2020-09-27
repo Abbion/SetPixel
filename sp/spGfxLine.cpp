@@ -18,7 +18,7 @@ sp::BitMap sp::lineLI(vector2f start, vector2f end)	//Linear interpolation line 
 	BitMap line_segment(line_start_pos, line_size);
 	
 	//SP_FLOAT dis = Vec2fDistance(vc_s, vc_e);
-	SP_FLOAT dis = vc_s.distance(vc_e);
+	SP_FLOAT dis = sp::getDistance(vc_s, vc_e);
 
 	if ((int)dis != 0)
 	{
@@ -55,7 +55,6 @@ sp::BitMap sp::line(vector2f start, vector2f end)
 	line_size.y++;
 
 	BitMap line_segment(line_start_pos, line_size);
-
 
 	SP_FLOAT x_alignment = vc_s.x - vc_e.x;
 	SP_FLOAT y_alignment = vc_s.y - vc_e.y;
@@ -167,9 +166,9 @@ sp::BitMap sp::line(vector2f start, vector2f end)
 
 sp::BitMap sp::line(vector2i start, vector2i end)
 {
-	sp::vector2f vc_s = sp::vector2f(start.x, start.y);
-	sp::vector2f vc_e = sp::vector2f(end.x, end.y);
-
+	sp::vector2i vc_s = start;
+	sp::vector2i vc_e = end;
+	
 	vector2i line_size(std::abs(vc_s.x - vc_e.x), std::abs(vc_s.y - vc_e.y));
 	vector2i line_start_pos(std::min(vc_s.x, vc_e.x), std::min(vc_s.y, vc_e.y));
 

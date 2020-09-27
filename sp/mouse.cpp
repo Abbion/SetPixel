@@ -5,7 +5,13 @@
 sp::InputStateMap sp::Mouse::m_buttonMap;
 int sp::Mouse::m_scroll;
 int sp::Mouse::m_lastScroll;
+int sp::Mouse::m_lastX;
+int sp::Mouse::m_lastY;
+bool sp::Mouse::m_firstEnter = false;
+bool sp::Mouse::m_lock = false;
 
+int sp::Mouse::m_screenCenterX;
+int sp::Mouse::m_screenCenterY;
 
 //Devices for linux
 #if unix
@@ -15,6 +21,24 @@ Window* sp::Mouse::ptr_window = nullptr;
 #elif _WIN32 
 HWND* sp::Mouse::ptr_window = nullptr;
 #endif
+//-----------------------------------------------------
+
+
+
+//-----------------------------------------------------
+void sp::Mouse::init()
+{
+    InputStates clearState;
+    clearState.hold = false;
+    clearState.press = false;
+    clearState.release = false;
+
+    setNewButton(Left, clearState);
+    setNewButton(Middle, clearState);
+    setNewButton(Right, clearState);
+    
+    setCenterPoint();
+}
 //-----------------------------------------------------
 
 
@@ -169,7 +193,7 @@ void sp::Mouse::getMousePosition(int *pos_X, int *pos_Y, bool relativeToWindow)
         position.x -= windowRect.left;
         position.y -= windowRect.top;
     }
-    
+
     *pos_X = position.x;
     *pos_Y = position.y;
 }
@@ -178,7 +202,7 @@ void sp::Mouse::getMousePosition(int *pos_X, int *pos_Y, bool relativeToWindow)
 
 
 //-----------------------------------------------------
-    void sp::Mouse::updateButtonMap(Event& event)
+void sp::Mouse::updateButtonMap(Event& event)
     {
         if (event.getSystemEventPointer() == WM_LBUTTONDOWN)
         {
@@ -236,26 +260,59 @@ void sp::Mouse::getMousePosition(int *pos_X, int *pos_Y, bool relativeToWindow)
 
 
 //-----------------------------------------------------
+void sp::Mouse::getDeltaMousePosition(int *pos_X, int *pos_Y)
+{   
+    if(!m_firstEnter)
+    {
+        getMousePosition(&m_lastX, &m_lastY);
+        m_firstEnter = true;
+    }
+
+    int tempX, tempY;
+    getMousePosition(&tempX, &tempY);
+    *pos_X = tempX - m_lastX;
+    *pos_Y = tempY - m_lastY;
+
+    
+    if(m_lock)
+    {
+        SetCursorPos(m_screenCenterX, m_screenCenterY);
+        m_lastX = m_screenCenterX;
+        m_lastY = m_screenCenterY;
+    }
+    else
+    {
+        m_lastX = tempX;
+        m_lastY = tempY;   
+    }
+}
+//-----------------------------------------------------
+
+
+
+//-----------------------------------------------------
 void sp::Mouse::setMouseSource(HWND* window)
 {
     ptr_window = window;
 }
-#endif
 //-----------------------------------------------------
 
 
 
 //-----------------------------------------------------
-void sp::Mouse::init()
+void sp::Mouse::hideMouse(bool hide)
 {
-    InputStates clearState;
-    clearState.hold = false;
-    clearState.press = false;
-    clearState.release = false;
+    ShowCursor(!hide);
+}
+//-----------------------------------------------------
+#endif
 
-    setNewButton(Left, clearState);
-    setNewButton(Middle, clearState);
-    setNewButton(Right, clearState);
+
+
+//-----------------------------------------------------
+void sp::Mouse::lockMouse(bool lock)
+{
+    m_lock = lock;
 }
 //-----------------------------------------------------
 
@@ -265,5 +322,15 @@ void sp::Mouse::init()
 void sp::Mouse::setNewButton(unsigned int button, sp::InputStates setState)
 {
     m_buttonMap.insert(std::pair<unsigned int, InputStates>(button, setState));
+}
+//-----------------------------------------------------
+
+
+
+//-----------------------------------------------------
+void sp::Mouse::setCenterPoint()
+{
+    m_screenCenterX = GetSystemMetrics(SM_CXSCREEN) / 2;
+    m_screenCenterY = GetSystemMetrics(SM_CYSCREEN) / 2;
 }
 //-----------------------------------------------------

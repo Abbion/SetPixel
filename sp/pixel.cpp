@@ -111,6 +111,7 @@ void sp::BitMap::marge(BitMap* bm, int obj_count)   //Margeing for many objects
 //-----------------------------------------------------
 
 
+
 //-----------------------------------------------------
 void sp::BitMap::calculateNewRect(const BitMap& bm, sp::vector2i* pos, sp::vector2i* size)
 {
@@ -194,7 +195,7 @@ void sp::BitMap::margeToBitMap(BitMap& target, BitMap& bm)
 //-----------------------------------------------------
 
 
-/*
+
 //-----------------------------------------------------
 void sp::BitMap::fill()
 {
@@ -236,7 +237,6 @@ void sp::BitMap::fillLine(int start, int end)
         m_pixelPosMap[i] = 1;    
 }
 //-----------------------------------------------------
-*/
 
 
 

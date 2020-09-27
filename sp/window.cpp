@@ -336,8 +336,6 @@ void sp::PixelWindow::getNextEvent(Event& event)
             SetWindowPos(m_window, HWND_TOP, m_x_pos, m_y_pos, corr_width, corr_height, SWP_SHOWWINDOW);
 
             this->setRenderSpaceSize(m_width, m_height);
-
-            std::cout << "X: " << m_width << " Y: " << m_height << std::endl;
         }
     }
 
@@ -371,7 +369,7 @@ int sp::PixelWindow::peekEvents()
 {
     if (Event::m_messageQueue.empty())
     {
-        if(PeekMessage((LPMSG)(&m_messageWin), 0, 0, 0, PM_REMOVE))
+        while(PeekMessage((LPMSG)(&m_messageWin), 0, 0, 0, PM_REMOVE))
         {
             if (m_messageWin.message == WM_QUIT)
             {
@@ -382,8 +380,8 @@ int sp::PixelWindow::peekEvents()
             TranslateMessage(&m_messageWin);
             DispatchMessage(&m_messageWin);
             m_firstMessage = true;
-            Event::clearRepeated();
         }
+        Event::clearRepeated();
     }
 
     else if (!m_firstMessage)

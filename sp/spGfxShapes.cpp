@@ -1,16 +1,28 @@
 #include "spGfxShapes.h"
 #include "spGfxLine.h"
+#include "spAlgorithms.h"
 #include <iostream>
 
 
 //-----------------------------------------------------
-sp::BitMap sp::Triangle(sp::vector2f p1, sp::vector2f p2, sp::vector2f p3)
+sp::BitMap sp::Triangle(const sp::vector2f& p1, const sp::vector2f& p2, const sp::vector2f& p3)
 {
    sp::BitMap bm;
-   
+   if(!sp::coordConverter::pointInView(p1) && !sp::coordConverter::pointInView(p2) && !sp::coordConverter::pointInView(p3))
+      return bm;
+
    sp::BitMap triangle_sides[3] = {sp::line(p1, p2), sp::line(p2, p3), sp::line(p3, p1)};
    bm.marge(triangle_sides, 3);
    return bm;
+}
+
+sp::BitMap sp::Triangle(const sp::vector3f& p1, const sp::vector3f& p2, const sp::vector3f& p3)
+{
+   sp::vector2f p1Vec2(p1.x, p1.y);
+   sp::vector2f p2Vec2(p2.x, p2.y);
+   sp::vector2f p3Vec2(p3.x, p3.y);
+
+   return Triangle(p1Vec2, p2Vec2, p3Vec2);
 }
 //-----------------------------------------------------
 
@@ -267,6 +279,84 @@ sp::BitMap sp::Elipse(sp::vector2f pos, SP_FLOAT radiusX, SP_FLOAT radiusY)
    return bm;
 }
 //-----------------------------------------------------
+
+
+sp::BitMap sp::Mesh(sp::vector3f* vertex, int count, sp::Camera& cam, bool faceCulling, bool switchCullingDirection)
+{
+   sp::BitMap finalMesh;
+   if(count % 3 != 0)
+   {
+      count -= count % 3;
+   }
+
+   for (int i = 0; i < count; i += 3)
+   {
+      bool visible = sp::faceCulling(vertex[0 + i], vertex[1 + i], vertex[2 + i]);
+      if(switchCullingDirection)
+         visible = !visible; 
+
+      if(visible || !faceCulling)
+      {
+          /*
+         std::vector<sp::vector3f> output;
+         sp::clipTriangleToView(vertex[0 + i], vertex[1 + i], vertex[2 + i], output, cam);
+         //std::cout << output.size() << std::endl;
+         
+         for (int k = 0; k < output.size(); k += 3)
+         {
+             sp::BitMap triangles = sp::Triangle(output[k], output[k + 1], output[k + 2]);
+
+             if (triangles.m_pixelPosMap != nullptr)
+                 finalMesh.marge(triangles);
+         }
+         */
+         
+         
+         
+         sp::BitMap triangles = sp::Triangle(vertex[0 + i], vertex[1 + i], vertex[2 + i]);
+         if (triangles.m_pixelPosMap != nullptr)
+            finalMesh.marge(triangles);            
+      }
+   }
+
+   return finalMesh;
+}
+
+sp::BitMap sp::Mesh(std::vector<sp::vector3f>& vertexVec, bool faceCulling, bool switchCullingDirection)
+{
+   //Left Top Right Down 
+   std::vector<sp::vector3f> viewPlanes = {sp::vector3f(-1.0, 0.0, 0.0), sp::vector3f(1.0, 0.0, 0.0), sp::vector3f(0.0, 1.0, 0.0), sp::vector3f(0.0, -1.0, 0.0),
+                                            sp::vector3f(1.0, 0.0, 0.0),sp::vector3f(-1.0, 0.0, 0.0), sp::vector3f(0.0, -1.0, 0.0), sp::vector3f(0.0, 1.0, 0.0) };
+
+   sp::BitMap finalMesh;
+   int count = vertexVec.size(); 
+   if(count % 3 != 0)
+   {
+      count -= count % 3;
+   }
+
+   for (int i = 0; i < count; i += 3)
+   {
+      bool visible = sp::faceCulling(vertexVec[0 + i], vertexVec[1 + i], vertexVec[2 + i]);
+      if(switchCullingDirection)
+         visible = !visible; 
+
+      if(visible || !faceCulling)
+      {         
+         std::vector<sp::vector3f> output;
+         sp::clipTriangleToPlanes(vertexVec[0 + i], vertexVec[1 + i], vertexVec[2 + i], output, viewPlanes);
+         
+         for (int k = 0; k < output.size(); k += 3)
+         {
+             sp::BitMap triangles = sp::Triangle(output[k], output[k + 1], output[k + 2]);
+             if (triangles.m_pixelPosMap != nullptr)
+                 finalMesh.marge(triangles);
+         }
+      }
+   }
+
+   return finalMesh;
+}
 
 
 //Often used function to plot points to bitmap---------

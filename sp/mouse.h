@@ -45,14 +45,21 @@ public:
     #endif
 
 public:
+    static void init();     //Initializes the mouse.
+
     static bool getButtonPress(const ButtonCode& button);       //Check if the button was pressed.
     static bool getButtonRelease(const ButtonCode& button);     //Check if the button was released.
     static bool getButtonIsPressed(const ButtonCode& button);   //Check if the button is pressed.
     static bool getButtonIsReleased(const ButtonCode& button);  //Check if the button is released.
     static int getScrolling();                                  //Returns the scrolling value
     static void getMousePosition(int *pos_X, int *pos_Y, bool relativeToWindow = false);    //Returns the mouse position.
+    static void getDeltaMousePosition(int *pos_X, int *pos_Y);  //Returns the difference between last mouse position and the new one
+    
+    static void lockMouse(bool lock);                           //Locks the mouse
+    static void hideMouse(bool hide);                           //Hides the mouse coursor
 
     static void updateButtonMap(Event& event);                  //Updates the button map changing their button states.
+     static void setNewButton(unsigned int button, InputStates setState); //Assigns (key number) to a key in the key map.
 
     //==========LINUX IMPLEMENTATION==========
     #if unix
@@ -67,14 +74,19 @@ public:
     #endif
     //-----------------------------------------------------
 
-    static void init();     //Initializes the keyboard.
-
-    static void setNewButton(unsigned int button, InputStates setState); //Assigns (key number) to a key in the key map.
+protected:
+    static void setCenterPoint();   //Centers the mouse position so that delta position is correct
 
 private:
     static InputStateMap m_buttonMap;
     static int m_scroll;
     static int m_lastScroll;
+    static int m_lastX, m_lastY;
+    static bool m_firstEnter;
+    static bool m_lock;
+
+    static int m_screenCenterX;
+    static int m_screenCenterY;
 
 
     //Devices for linux

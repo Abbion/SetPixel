@@ -1,6 +1,5 @@
 #ifndef SP_GRAPHICS_H_
 #define SP_GRAPHICS_H_
-#include "spmath.h"
 #include "pixel.h"
 #include "coreDefines.h"
 

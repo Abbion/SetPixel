@@ -62,6 +62,8 @@
         "numeric": "cpp",
         "optional": "cpp",
         "random": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "queue": "cpp",
+        "list": "cpp"
     }
 }

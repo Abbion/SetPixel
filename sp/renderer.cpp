@@ -53,6 +53,7 @@ void sp::Renderer::setRenderSpaceSize(int width, int height)
 
     coordConverter::m_renderWidth = m_windowSpaceWidth / m_pixelSize;
     coordConverter::m_renderHeight = m_windowSpaceHeight / m_pixelSize;
+    sp::coordConverter::m_invAspectRatio = (SP_FLOAT)sp::coordConverter::m_renderHeight / (SP_FLOAT)sp::coordConverter::m_renderWidth;
 
     if(m_charMap)
         delete[] m_charMap;
@@ -419,8 +420,9 @@ void sp::Renderer::setRenderSpaceSize(int width, int height)
 {
     m_windowSpaceWidth = width;
     m_windowSpaceHeight = height;
-    coordConverter::m_renderWidth = m_windowSpaceWidth / m_pixelSize;
-    coordConverter::m_renderHeight = m_windowSpaceHeight / m_pixelSize; 
+    sp::coordConverter::m_renderWidth = m_windowSpaceWidth / m_pixelSize;
+    sp::coordConverter::m_renderHeight = m_windowSpaceHeight / m_pixelSize; 
+    sp::coordConverter::m_invAspectRatio = (SP_FLOAT)sp::coordConverter::m_renderHeight/ (SP_FLOAT)sp::coordConverter::m_renderWidth;
 
      if(m_pixelMap != nullptr)
      {
