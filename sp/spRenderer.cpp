@@ -1,5 +1,5 @@
 #include "spRenderer.h"
-#include "spmath.h"
+#include "spMath.h"
 #include <sstream>
 #include <stdio.h>
 #include <iostream>

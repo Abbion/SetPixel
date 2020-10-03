@@ -207,9 +207,5 @@ int sp::clipTriangleToPlane(const sp::vector3f& pointOnPlane, const sp::vector3f
 
     std::cout << std::endl;
 
-    if(countOut == 0)
-        return 0;
-    else if(countOut == 3)
-        return 3;
-        
+    return countOut;
 }

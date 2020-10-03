@@ -1,4 +1,4 @@
-#include "spmath.h"
+#include "spMath.h"
 #include <cmath>
 #include <iostream>
 #include <limits>

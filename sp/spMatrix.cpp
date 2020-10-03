@@ -1,5 +1,5 @@
 #include "spMatrix.h"
-#include "spmath.h"
+#include "spMath.h"
 
 //-----------------------------------------------
 sp::Matrix3::Matrix3()

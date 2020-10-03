@@ -9,6 +9,8 @@ Windows/SetPixel/SetPixel.vcxproj
 Windows/SetPixel/SetPixel.vcxproj.filters
 Windows/SetPixel/SetPixel.vcxproj.user
 Linux/*.o
+Linux/*.h
+Linux/*.cpp
 Linux/Sp_Workspace.code-workspace
 Windows/SetPixel/SPICO.ico
 sp/.vscode/settings.json

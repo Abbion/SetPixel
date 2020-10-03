@@ -1,6 +1,7 @@
 #include "spRendererBase.h"
-#include "spmath.h"
+#include "spMath.h"
 #include <stdio.h>
+#include <cmath>
 
 //-----------------------------------------------------
 sp::RendererBase::RendererBase()

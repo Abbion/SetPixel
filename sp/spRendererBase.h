@@ -2,7 +2,7 @@
 #define _SP_RENDERER_BASE_H_
 #include "spColor.h"
 #include "spPixel.h"
-#include "spmath.h"
+#include "spMath.h"
 
 //Base class for os specific renderer classes.
 namespace sp

@@ -25,7 +25,13 @@ void sp::Camera::update()
     if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::A))
         m_position -= m_right * m_speed;
 
+    if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::K))
+        sp::Mouse::hideMouse(false);
+    if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::O))
+        sp::Mouse::hideMouse(true);
+
     Mouse::getDeltaMousePosition(&m_deltaMousePos.x, &m_deltaMousePos.y);
+    //std::cout << m_deltaMousePos.x << m_deltaMousePos.y << std::endl; 
     if(m_deltaMousePos.y != 0)
     {
         SP_FLOAT speed = m_deltaMousePos.y * m_mouseSnesitivity;

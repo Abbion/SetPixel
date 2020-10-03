@@ -3,6 +3,7 @@
 
 #include "spCoreDefined.h"
 #include <iostream>
+#include <cmath>
 
 namespace sp {
     //Vector 2------------------

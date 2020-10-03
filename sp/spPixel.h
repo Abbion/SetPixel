@@ -1,7 +1,7 @@
 #ifndef _SP_PIXEL_H_
 #define _SP_PIXEL_H_
 #include "spColor.h"
-#include "spmath.h"
+#include "spMath.h"
 #include <vector>
 
 namespace sp

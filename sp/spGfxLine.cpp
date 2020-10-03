@@ -1,7 +1,7 @@
 #include "spGfxLine.h"
 #include <algorithm>
 #include <iostream>
-#include "spmath.h"
+#include "spMath.h"
 
 sp::BitMap sp::lineLI(vector2f start, vector2f end)	//Linear interpolation line drawing. My idea :)
 {

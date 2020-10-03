@@ -37,7 +37,10 @@ void sp::Mouse::init()
     setNewButton(Middle, clearState);
     setNewButton(Right, clearState);
     
+    
+    #if _WIN32
     setCenterPoint();
+    #endif
 }
 //-----------------------------------------------------
 
@@ -167,13 +170,86 @@ void sp::Mouse::updateButtonMap(Event& event)
 
 
 //-----------------------------------------------------
+void sp::Mouse::getDeltaMousePosition(int *pos_X, int *pos_Y)
+{   
+    if(!m_firstEnter)
+    {
+        getMousePosition(&m_lastX, &m_lastY);
+        m_firstEnter = true;
+    }
+
+    int tempX, tempY;
+    getMousePosition(&tempX, &tempY);
+    *pos_X = tempX - m_lastX;
+    *pos_Y = tempY - m_lastY;
+
+    
+    if(m_lock)
+    {
+        Window root_window = XRootWindow(ptr_display, 0);
+        XSelectInput(ptr_display, root_window, KeyReleaseMask);
+        XWarpPointer(ptr_display, None, root_window, 0, 0, 0, 0, m_screenCenterX, m_screenCenterY);
+        XFlush(ptr_display);
+        m_lastX = m_screenCenterX;
+        m_lastY = m_screenCenterY;
+    }
+    else
+    {
+        m_lastX = tempX;
+        m_lastY = tempY;   
+    }
+}
+//-----------------------------------------------------
+
+
+
+//-----------------------------------------------------
 void sp::Mouse::setMouseSource(Display* display, Window* window)
 {
     ptr_display = display;
     ptr_window = window;
+    setCenterPoint();
 }
-#endif
 //-----------------------------------------------------
+
+
+
+//-----------------------------------------------------
+void sp::Mouse::hideMouse(bool hide)
+{
+    if(hide)
+    {
+        Cursor invisible;
+        char clearArr[1] = { 0 };
+        Pixmap blank;
+        XColor empty;
+        blank = XCreateBitmapFromData(ptr_display, *ptr_window, clearArr, 1, 1);
+        invisible = XCreatePixmapCursor(ptr_display, blank,  blank, &empty, &empty, 0, 0);
+        XDefineCursor(ptr_display, *ptr_window, invisible);
+        XFreePixmap(ptr_display, blank);
+    }
+    else
+    {
+        Cursor vis;
+        vis = XCreateFontCursor(ptr_display, XC_arrow);
+        XDefineCursor(ptr_display, *ptr_window, vis);
+        XFreeCursor(ptr_display, vis);
+    }
+    
+}
+//-----------------------------------------------------
+
+
+
+//-----------------------------------------------------
+void sp::Mouse::setCenterPoint()
+{
+    Screen *screen = DefaultScreenOfDisplay(ptr_display);
+    m_screenCenterX = WidthOfScreen(screen) / 2;
+    m_screenCenterY = HeightOfScreen(screen) / 2;
+}
+//-----------------------------------------------------
+#endif
 
 
 
@@ -305,6 +381,15 @@ void sp::Mouse::hideMouse(bool hide)
     ShowCursor(!hide);
 }
 //-----------------------------------------------------
+
+//-----------------------------------------------------
+void sp::Mouse::setCenterPoint()
+{
+    m_screenCenterX = GetSystemMetrics(SM_CXSCREEN) / 2;
+    m_screenCenterY = GetSystemMetrics(SM_CYSCREEN) / 2;
+}
+//-----------------------------------------------------
+
 #endif
 
 
@@ -322,15 +407,5 @@ void sp::Mouse::lockMouse(bool lock)
 void sp::Mouse::setNewButton(unsigned int button, sp::InputStates setState)
 {
     m_buttonMap.insert(std::pair<unsigned int, InputStates>(button, setState));
-}
-//-----------------------------------------------------
-
-
-
-//-----------------------------------------------------
-void sp::Mouse::setCenterPoint()
-{
-    m_screenCenterX = GetSystemMetrics(SM_CXSCREEN) / 2;
-    m_screenCenterY = GetSystemMetrics(SM_CYSCREEN) / 2;
 }
 //-----------------------------------------------------

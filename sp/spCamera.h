@@ -1,7 +1,7 @@
 #ifndef _SP_CAMERA_H_
 #define _SP_CAMERA_H_
 #include "spCoreDefined.h"
-#include "spmath.h"
+#include "spMath.h"
 #include <vector>
 
 namespace sp{

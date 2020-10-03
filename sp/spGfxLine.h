@@ -1,6 +1,6 @@
 #ifndef _SP_GFX_LINE_H_
 #define _SP_GFX_LINE_H_
-#include "spmath.h"
+#include "spMath.h"
 #include "spPixel.h"
 #include "spCoreDefined.h"
 #include <vector>

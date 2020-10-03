@@ -3,6 +3,7 @@
 
 #if unix
 #include <X11/Xlib.h>
+#include <X11/cursorfont.h>
 #elif _WIN32
 #include <windows.h>
 #endif
