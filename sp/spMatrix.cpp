@@ -1,18 +1,17 @@
 #include "spMatrix.h"
 #include "spMath.h"
 
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix3::Matrix3()
 {
     value[0][0] = 1.0f; value[0][1] = 0.0f; value[0][2] = 0.0f;
     value[1][0] = 0.0f; value[1][1] = 1.0f; value[1][2] = 0.0f;
     value[2][0] = 0.0f; value[2][1] = 0.0f; value[2][2] = 1.0f;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix3 sp::Matrix3::operator*(Matrix3& mat_3)
 {
     Matrix3 resultMatrix;
@@ -31,11 +30,10 @@ sp::Matrix3 sp::Matrix3::operator*(Matrix3& mat_3)
 
     return resultMatrix;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix4::Matrix4()
 {
     value[0][0] = 1.0; value[0][1] = 0.0; value[0][2] = 0.0; value[0][3] = 0.0;
@@ -43,11 +41,10 @@ sp::Matrix4::Matrix4()
     value[2][0] = 0.0; value[2][1] = 0.0; value[2][2] = 1.0; value[2][3] = 0.0;
     value[3][0] = 0.0; value[3][1] = 0.0; value[3][2] = 0.0; value[3][3] = 1.0;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix4 sp::Matrix4::operator*(Matrix4& mat_4)
 {
     Matrix4 resultMatrix;
@@ -74,12 +71,11 @@ sp::Matrix4 sp::Matrix4::operator*(Matrix4& mat_4)
 
     return resultMatrix;
 }
-//-----------------------------------------------
-
+//-----------------------------------------------------
 
 
 //======================TRANSFORMS====================
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix3 sp::Transform::translate(sp::vector2f pos)
 {
     Matrix3 translateMatrix;
@@ -87,11 +83,10 @@ sp::Matrix3 sp::Transform::translate(sp::vector2f pos)
     translateMatrix.value[2][1] = pos.y;
     return translateMatrix;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix4 sp::Transform::translate(sp::vector3f pos)
 {
     Matrix4 translateMatrix;
@@ -100,11 +95,10 @@ sp::Matrix4 sp::Transform::translate(sp::vector3f pos)
     translateMatrix.value[3][2] = pos.z;
     return translateMatrix;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix3 sp::Transform::scale(sp::vector2f scale)
 {
     Matrix3 scaleMatrix;
@@ -112,11 +106,10 @@ sp::Matrix3 sp::Transform::scale(sp::vector2f scale)
     scaleMatrix.value[1][1] = scale.y;
     return scaleMatrix;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix4 sp::Transform::scale(sp::vector3f scale)
 {
     Matrix4 scaleMatrix;
@@ -125,11 +118,10 @@ sp::Matrix4 sp::Transform::scale(sp::vector3f scale)
     scaleMatrix.value[2][2] = scale.y;
     return scaleMatrix;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix3 sp::Transform::rotate(SP_FLOAT angle)
 {
     Matrix3 rotationMatrix;
@@ -147,11 +139,10 @@ sp::Matrix3 sp::Transform::rotate(SP_FLOAT angle)
     }
     return rotationMatrix;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix4 sp::Transform::rotate(SP_FLOAT angle, sp::vector3f dir)
 {
     //Y axis--------------------
@@ -179,11 +170,10 @@ sp::Matrix4 sp::Transform::rotate(SP_FLOAT angle, sp::vector3f dir)
     sp::Matrix4 rotationMatirx = ZRotMat * XRotMat * YRotMat;
     return rotationMatirx;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix4 sp::Transform::rotate(sp::vector3f angle)
 {
     sp::Matrix4 XRotMat = sp::Transform::rotateByX(angle.x);
@@ -193,11 +183,10 @@ sp::Matrix4 sp::Transform::rotate(sp::vector3f angle)
     sp::Matrix4 rotationMatirx = ZRotMat * XRotMat * YRotMat;
     return rotationMatirx;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix4 sp::Transform::rotateByX(SP_FLOAT angle, bool degrees)
 {
     Matrix4 rotationMatrix;
@@ -218,11 +207,10 @@ sp::Matrix4 sp::Transform::rotateByX(SP_FLOAT angle, bool degrees)
     }
     return rotationMatrix;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix4 sp::Transform::rotateByY(SP_FLOAT angle, bool degrees)
 {
     Matrix4 rotationMatrix;
@@ -243,11 +231,10 @@ sp::Matrix4 sp::Transform::rotateByY(SP_FLOAT angle, bool degrees)
     }
     return rotationMatrix;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix4 sp::Transform::rotateByZ(SP_FLOAT angle, bool degrees)
 {
     Matrix4 rotationMatrix;
@@ -268,11 +255,10 @@ sp::Matrix4 sp::Transform::rotateByZ(SP_FLOAT angle, bool degrees)
     }
     return rotationMatrix;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix4 sp::Transform::lookAt(sp::vector3f pos, sp::vector3f target, sp::vector3f up)
 {
     sp::vector3f camDir = sp::getNormal(pos - target);
@@ -299,20 +285,18 @@ sp::Matrix4 sp::Transform::lookAt(sp::vector3f pos, sp::vector3f target, sp::vec
 
     return lookAtMatrix;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::vector3f sp::Transform::perspectiveSpaceProjection(const sp::vector3f& vertex, SP_FLOAT w)
 {
     return sp::vector3f(vertex.x / w, vertex.y / w, vertex.z / w);
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 sp::Matrix4 sp::Transform::cameraProjectionMatrix(SP_FLOAT near, SP_FLOAT far, SP_FLOAT angle)
 {
     sp::Matrix4 projectionMatrix;
@@ -332,11 +316,10 @@ sp::Matrix4 sp::Transform::cameraProjectionMatrix(SP_FLOAT near, SP_FLOAT far, S
 
     return projectionMatrix;
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 void sp::Transform::applyTransform(sp::vector2f* vertexArr, int count, const Matrix3& transform)
 {
     for (int i = 0; i < count; i++)
@@ -347,11 +330,10 @@ void sp::Transform::applyTransform(sp::vector2f* vertexArr, int count, const Mat
         vertexArr[i] = temp;
     }
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
+//-----------------------------------------------------
 void sp::Transform::applyTransform(sp::vector3f* vertexArr, int count, const Matrix4& transform)
 {
     for (int i = 0; i < count; i++)
@@ -368,14 +350,13 @@ void sp::Transform::applyTransform(sp::vector3f* vertexArr, int count, const Mat
         vertexArr[i] = temp;
     }
 }
-//-----------------------------------------------
+//-----------------------------------------------------
 
 
-
-//-----------------------------------------------
-void sp::Transform::applyTransform(std::vector<sp::vector3f>& vertexVec, const Matrix4& transform)
+//-----------------------------------------------------
+void sp::Transform::applyTransform(std::vector<sp::vector3f>& vertexVec, const Matrix4& transform, int offset , int startFrom )
 {
-    for(int i = 0; i < vertexVec.size(); i++)
+    for(int i = startFrom; i < vertexVec.size(); i += offset + 1)
     {
         sp::vector3f temp;
         temp.x = (vertexVec[i].x * transform.value[0][0]) + (vertexVec[i].y * transform.value[1][0]) + (vertexVec[i].z * transform.value[2][0]) + (1 * transform.value[3][0]);
@@ -389,4 +370,4 @@ void sp::Transform::applyTransform(std::vector<sp::vector3f>& vertexVec, const M
         vertexVec[i] = temp;
     }
 }
-//-----------------------------------------------
+//-----------------------------------------------------

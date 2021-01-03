@@ -7,17 +7,22 @@
 #include "spMouse.h"
 
 #include "spColor.h"
+#include "spBitMap.h"
 #include "spPixel.h"
 
 #include "spMath.h"
-#include "spAlgorithms.h"
+#include "spClippingAlgorithms.h"
 
 #include "spCamera.h"
 
-#include "spGfxLine.h"
-#include "spGfxCurveLine.h"
-#include "spGfxShapes.h"
+#include "spLine.h"
+#include "spCurveLine.h"
+#include "spShapes.h"
+#include "spModel.h"
 
-#include "spFileLoader.h"
+#include "spFragmentsMapper.h"
+
+#include "spModelLoader.h"
+#include "spBitMapLoader.h"
 
 #endif

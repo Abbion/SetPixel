@@ -2,6 +2,8 @@
 #include "spKeyboard.h"
 #include "spMouse.h"
 
+
+//==============CAMERA==============
 sp::Camera::Camera(SP_FLOAT nearPlane, SP_FLOAT farPlane, SP_FLOAT angle) :
     m_near(nearPlane), m_far(farPlane), m_angle(angle)
 { 
@@ -10,45 +12,10 @@ sp::Camera::Camera(SP_FLOAT nearPlane, SP_FLOAT farPlane, SP_FLOAT angle) :
     m_up = sp::vector3f(0.0, 1.0, 0.0);
     m_woldUP = m_up;
 }
+//-----------------------------------------------------
 
-void sp::Camera::update()
-{
-    if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::W))
-        m_position += m_forward * m_speed;
 
-    if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::S))
-        m_position -= m_forward * m_speed;
-
-    if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::D))
-        m_position += m_right * m_speed;
-
-    if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::A))
-        m_position -= m_right * m_speed;
-
-    if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::K))
-        sp::Mouse::hideMouse(false);
-    if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::O))
-        sp::Mouse::hideMouse(true);
-
-    Mouse::getDeltaMousePosition(&m_deltaMousePos.x, &m_deltaMousePos.y);
-    //std::cout << m_deltaMousePos.x << m_deltaMousePos.y << std::endl; 
-    if(m_deltaMousePos.y != 0)
-    {
-        SP_FLOAT speed = m_deltaMousePos.y * m_mouseSnesitivity;
-        m_pitch += speed;
-        if(m_pitch > 89.0)
-            m_pitch = 89.0;
-        if(m_pitch < -89.0)
-            m_pitch = -89.0;
-    }
-
-    if(m_deltaMousePos.x != 0)
-    {
-        SP_FLOAT speed = m_deltaMousePos.x * m_mouseSnesitivity;
-        m_yaw += speed;
-    }
-}
-
+//Returns the camera transformation matrix-------------
 sp::Matrix4 sp::Camera::getCameraTransform()
 {
 
@@ -65,7 +32,10 @@ sp::Matrix4 sp::Camera::getCameraTransform()
     sp::Matrix4 cameraMatrix = sp::Transform::lookAt(m_position, m_position + m_forward, m_up);
     return cameraMatrix;
 }
+//-----------------------------------------------------
 
+
+//Returns the camera Far and Near clip planes----------
 std::vector<sp::vector3f> sp::Camera::getCameraClipPlanes() const
 {
     std::vector<sp::vector3f> planes;
@@ -79,3 +49,45 @@ std::vector<sp::vector3f> sp::Camera::getCameraClipPlanes() const
 
     return planes;
 }
+//-----------------------------------------------------
+
+
+//Updates the camera with WSAD keys and mouse movement-
+void sp::Camera::update()
+{
+    if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::W))
+        m_position += m_forward * m_speed;
+
+    if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::S))
+        m_position -= m_forward * m_speed;
+
+    if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::D))
+        m_position += m_right * m_speed;
+
+    if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::A))
+        m_position -= m_right * m_speed;
+
+    if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::K))
+        sp::Mouse::hideMouse(false);
+    if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::O))
+        sp::Mouse::hideMouse(true);
+
+    Mouse::getDeltaMousePosition(&m_deltaMousePos.x, &m_deltaMousePos.y);
+
+    if (m_deltaMousePos.y != 0)
+    {
+        SP_FLOAT speed = m_deltaMousePos.y * m_mouseSnesitivity;
+        m_pitch += speed;
+        if (m_pitch > 89.0)
+            m_pitch = 89.0;
+        if (m_pitch < -89.0)
+            m_pitch = -89.0;
+    }
+
+    if (m_deltaMousePos.x != 0)
+    {
+        SP_FLOAT speed = m_deltaMousePos.x * m_mouseSnesitivity;
+        m_yaw += speed;
+    }
+}
+//-----------------------------------------------------

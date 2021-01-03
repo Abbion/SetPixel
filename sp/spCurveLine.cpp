@@ -1,8 +1,8 @@
-#include "spGfxCurveLine.h"
-#include "spGfxLine.h"
+#include "spCurveLine.h"
+#include "spLine.h"
 #include <algorithm>
 
-//Bezier------------------------
+//Bezier-----------------------------------------------
 sp::BitMap sp::QuadraticBezier(const sp::vector2f& start, const sp::vector2f& end, const sp::vector2f& control, int precision, bool showControlPoints)
 {
     //Convert to view-----------
@@ -49,7 +49,7 @@ sp::BitMap sp::QuadraticBezier(const sp::vector2f& start, const sp::vector2f& en
     if(showControlPoints)
     {
         sp::BitMap cp1(ctrl, sp::vector2i(1, 1));
-        cp1.m_pixelPosMap[0] = 1;
+        cp1.m_bitMapData[0] = 1;
         QBcurve.marge(cp1);
     }
     //--------------------------
@@ -109,8 +109,8 @@ sp::BitMap sp::CubicBezier(const sp::vector2f& start, const sp::vector2f& end, c
     {
         sp::BitMap cp1(ctrl1, sp::vector2i(1, 1));
         sp::BitMap cp2(ctrl2, sp::vector2i(1, 1));
-        cp1.m_pixelPosMap[0] = 1;
-        cp2.m_pixelPosMap[0] = 1;
+        cp1.m_bitMapData[0] = 1;
+        cp2.m_bitMapData[0] = 1;
         CBcurve.marge(cp1);
         CBcurve.marge(cp2);
     }
@@ -118,11 +118,11 @@ sp::BitMap sp::CubicBezier(const sp::vector2f& start, const sp::vector2f& end, c
 
     return CBcurve;
 }
-//------------------------------
+//-----------------------------------------------------
 
 
 
-//Splines-----------------------
+//Splines----------------------------------------------
 sp::BitMap sp::Spline(sp::vector2f* points, int count, bool loop)
 {
     //Check if we can draw the spline
@@ -187,4 +187,4 @@ static sp::vector2i sp::getPointOnSpline(const std::vector<sp::vector2i>& points
 
     return sp::vector2i(posX / 2, posY / 2);
 }
-//------------------------------
+//-----------------------------------------------------

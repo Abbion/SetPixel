@@ -2,17 +2,17 @@
 #define _SP_INPUT_BASE_H_
 #include <map>
 
-//Base class for input devices.
 namespace sp
 {
-struct InputStates
-{
-    bool hold;
-    bool press;
-    bool release;
-};
+    //Base class for input devices.
+    struct InputStates
+    {
+        bool hold;
+        bool press;
+        bool release;
+    };
 
-typedef std::map<unsigned int, InputStates> InputStateMap;
+    typedef std::map<unsigned int, InputStates> InputStateMap;
 }
 
 #endif

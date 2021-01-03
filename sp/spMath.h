@@ -1,9 +1,5 @@
 #ifndef _SP_MATH_H_
 #define _SP_MATH_H_
-#include "spCoreDefined.h"
-#include "spVector.h"
-#include "spMatrix.h"
-
 #include <cstdarg>
 #include <iostream>
 #include <string>
@@ -11,7 +7,12 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#include "spCoreDefined.h"
+#include "spVector.h"
+#include "spMatrix.h"
+
 #define SP_DEGTORAD (M_PI/180.0)
+
 
 namespace sp {
 

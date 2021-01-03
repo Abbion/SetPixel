@@ -1,10 +1,11 @@
 #include "SandBoxTwo.h"
-#include "spAlgorithms.h"
 
 SandBoxTwo::SandBoxTwo() : m_window(800, 600, "SandBoxOne"), m_camera(0.2, 5.0, 90)
 {
 	m_window.setPixelSize(4);
 	m_window.showFps(true);
+	sp::Mouse::lockMouse(true);
+	sp::Mouse::hideMouse(true);
 }
 
 void SandBoxTwo::update()
@@ -13,6 +14,10 @@ void SandBoxTwo::update()
 	SP_FLOAT y_offset = 0;
 	SP_FLOAT rot = 0.0;
 	SP_FLOAT scl = 1.0;
+
+	sp::ModelLoader model("Spyro.obj", true);
+	sp::BitMapTexture tex("Body.bmp", false, true);
+
 
 	while (m_window.isOpen())
 	{
@@ -28,45 +33,35 @@ void SandBoxTwo::update()
 			m_window.close();
 		}
 
-		if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::D))
-			x_offset += 0.01;
-		if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::A))
-			x_offset -= 0.01;
-		if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::W))
-			y_offset += 0.01;
-		if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::S))
-			y_offset -= 0.01;
-		if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::Left))
-			rot += 0.5;
-		if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::Right))
-			rot -= 0.5;
-		if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::Up))
-			scl += 0.01;
-		if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::Down))
-			scl -= 0.01;
+		m_camera.update();
 
-		sp::vector3f triData[3] = { sp::vector3f(-0.5, -0.5, 0.0), sp::vector3f(0.5, -0.5, 0.0), sp::vector3f(0.0, 0.5, 0.0) };
+		rot += 1.5;
+		std::vector<sp::vector3f> data = model.getModelData();
+		
 		sp::Matrix4 M1;
-		sp::Matrix4 translate = sp::Transform::translate(sp::vector3f(x_offset, y_offset, 0));
-		sp::Matrix4 rotate = sp::Transform::rotateByZ(rot);
-		sp::Matrix4 scale = sp::Transform::scale(sp::vector3f(scl, scl, scl));
-		M1 = scale * rotate * translate;
-	
-		std::vector<sp::vector3f> output;
+		sp::Matrix4 translate = sp::Transform::translate(sp::vector3f(0.0, -1.0, 0.5));
+		sp::Matrix4 rotate = sp::Transform::rotateByY(rot);
+		sp::Matrix4 scale = sp::Transform::scale(sp::vector3f(0.1f, 0.1f, 0.1f));
+		sp::Matrix4 projection = sp::Transform::cameraProjectionMatrix(0.5, 5, 39.6);
+		sp::Matrix4 view = m_camera.getCameraTransform();
 
-		sp::Transform::applyTransform(triData, 3, M1);
+		M1 = scale * rotate * translate * view * projection;
 
-		//sp::clipTriangleToView(triData[0], triData[1], triData[2], output, cam);
-		sp::BitMap tri;
+		sp::Transform::applyTransform(data, M1, 1);
 
-		for (int i = 0; i < output.size(); i += 3)
-		{
-			sp::BitMap tri2 = sp::Triangle(output[i], output[i + 1], output[i + 2]);
-			tri.marge(tri2);
-		}
+		
+		sp::Model tri = sp::GenerateModel(data, sp::fillType::TEXTURE, &tex);
 
 		m_window.clear();
-		m_window.draw(tri);
+		
+		
+		for (int i = 0; i < tri.plv.size(); i++)
+		{
+			m_window.draw(tri.plv[i]);
+		}
+		
+		
+		//m_window.draw(tri.bm);
 		m_window.display();
 	}
 }

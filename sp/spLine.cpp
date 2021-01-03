@@ -1,8 +1,9 @@
-#include "spGfxLine.h"
+#include "spLine.h"
 #include <algorithm>
 #include <iostream>
 #include "spMath.h"
 
+//-----------------------------------------------------
 sp::BitMap sp::lineLI(vector2f start, vector2f end)	//Linear interpolation line drawing. My idea :)
 {
 	//Optimization start drawing the line at (0, 0) and than move itH
@@ -17,7 +18,6 @@ sp::BitMap sp::lineLI(vector2f start, vector2f end)	//Linear interpolation line 
 	
 	BitMap line_segment(line_start_pos, line_size);
 	
-	//SP_FLOAT dis = Vec2fDistance(vc_s, vc_e);
 	SP_FLOAT dis = sp::getDistance(vc_s, vc_e);
 
 	if ((int)dis != 0)
@@ -29,139 +29,25 @@ sp::BitMap sp::lineLI(vector2f start, vector2f end)	//Linear interpolation line 
 			int x_pos = ((1.0f - i) * vc_s.x + i * vc_e.x) - line_segment.m_startPos.x;
 			int y_pos = ((1.0f - i) * vc_s.y + i * vc_e.y) - line_segment.m_startPos.y;
 			int bit_pos = y_pos * line_segment.m_size.x + x_pos;
-			line_segment.m_pixelPosMap[bit_pos] = 1;
+			line_segment.m_bitMapData[bit_pos] = 1;
 		}
 	}
 	
 	else
 	{
-		line_segment.m_pixelPosMap[0] = 1;
+		line_segment.m_bitMapData[0] = 1;
 	}
 	return line_segment;
 }
+//-----------------------------------------------------
 
 
+//-----------------------------------------------------
 sp::BitMap sp::line(vector2f start, vector2f end)
 {
 	sp::vector2i vc_s = coordConverter::normalToViewPosI(start);
 	sp::vector2i vc_e = coordConverter::normalToViewPosI(end);
 	return sp::line(vc_s, vc_e);
-	/*
-	vector2i line_size(std::abs(vc_s.x - vc_e.x), std::abs(vc_s.y - vc_e.y));
-	vector2i line_start_pos(std::min(vc_s.x, vc_e.x), std::min(vc_s.y, vc_e.y));
-
-	//Thicknes atleast one
-	line_size.x++;
-	line_size.y++;
-
-	BitMap line_segment(line_start_pos, line_size);
-
-	SP_FLOAT x_alignment = vc_s.x - vc_e.x;
-	SP_FLOAT y_alignment = vc_s.y - vc_e.y;
-
-	if(x_alignment == 0)	//Vertical streight line
-	{		
-		int y_distance = std::abs(line_segment.m_size.y);
-
-		if (vc_s.y > vc_e.y)
-			std::swap(vc_e.y, vc_s.y);
-		
-		for (int i = 0; i < y_distance; i++)
-			line_segment.m_pixelPosMap[i] = 1;
-
-		return line_segment;
-	}
-
-	else if (y_alignment == 0)	//horizontal streight line
-	{
-		int x_distance = std::abs(line_segment.m_size.x);
-
-		if (vc_s.y > vc_e.y)
-			std::swap(vc_e.y, vc_s.y);
-
-		for (int i = 0; i < x_distance; i++)
-			line_segment.m_pixelPosMap[i] = 1;
-
-		return line_segment;
-	}
-	
-
-	else	//Horizontal or angled line
-	{
-		SP_FLOAT slope =  y_alignment / x_alignment;
-
-		int adjust = 1;
-		SP_FLOAT offset = 0.0;
-		SP_FLOAT threshold;
-
-		if(slope <= 1 && slope >= -1)	//Low angle
-		{
-			int x_distance = std::abs(x_alignment);
-			int y_pixelPos = 0;
-
-			int delta = abs(y_alignment) * 2;
-			threshold = abs(x_alignment);
-			int thresholdInc = abs(x_alignment) * 2;
-
-			bool switch_angle = false;
-			if (slope < 0)
-				switch_angle = true;
-
-			for (int i = 0; i <= x_distance; i++)
-			{
-				int bit_pos;
-				if (switch_angle)
-					bit_pos = (y_pixelPos * line_segment.m_size.x) + (x_distance - i);
-				else
-					bit_pos = (y_pixelPos * line_segment.m_size.x) + i;
-
-				line_segment.m_pixelPosMap[bit_pos] = 1;
-
-				offset += delta;
-				if(offset >= threshold)
-				{
-					y_pixelPos += adjust;
-					threshold += thresholdInc;
-				}
-			}	
-		}
-
-
-		
-		else	//High angle
-		{
-			int y_distance = std::abs(y_alignment);
-			int x_pixelPos = 0;
-
-			int delta = abs(x_alignment) * 2;
-			threshold = abs(y_alignment);
-			int thresholdInc = abs(y_alignment) * 2;
-
-			bool switch_angle = false;
-			if (slope < 0)
-				switch_angle = true;
-
-			for(int i = 0; i <= y_distance; i++)
-			{
-				int bit_pos;
-				if (switch_angle)
-					bit_pos = ((y_distance - i) * line_segment.m_size.x) + x_pixelPos;
-				else
-					bit_pos = (i * line_segment.m_size.x) + x_pixelPos;
-
-				line_segment.m_pixelPosMap[bit_pos] = 1;
-
-				offset += delta;
-				if(offset >= threshold)
-				{
-					x_pixelPos += adjust;
-					threshold += thresholdInc;
-				}
-			}
-		}
-		return line_segment;	
-	}
-	*/
 }
 
 sp::BitMap sp::line(vector2i start, vector2i end)
@@ -190,20 +76,17 @@ sp::BitMap sp::line(vector2i start, vector2i end)
 		
 		for (int i = 0; i < y_distance; i++)
 		{
-			line_segment.m_pixelPosMap[i] = 1;
+			line_segment.m_bitMapData[i] = 1;
 		}
 
 		return line_segment;
 	}
 	
-
 	else	//Horizontal or angled line
 	{
 		SP_FLOAT slope =  y_alignment / x_alignment;
 
 		int adjust = 1;
-		//if(slope < 0)
-		//	adjust = -1;
 
 		SP_FLOAT offset = 0.0;
 		SP_FLOAT treshold = 0.5;
@@ -226,10 +109,9 @@ sp::BitMap sp::line(vector2i start, vector2i end)
 				int bit_pos = (y_start * line_segment.m_size.x) + i;
 				if (switch_angle)
 				{
-					//bit_pos = (abs(y_start) * line_segment.m_size.x) + (x_distance - i);
 					bit_pos = (y_start * line_segment.m_size.x) + (x_distance - i);
 				}
-				line_segment.m_pixelPosMap[bit_pos] = 1;
+				line_segment.m_bitMapData[bit_pos] = 1;
 
 				offset += delta;
 				if(offset >= treshold)
@@ -239,8 +121,6 @@ sp::BitMap sp::line(vector2i start, vector2i end)
 				}
 			}	
 		}
-
-
 		
 		else	//High angle
 		{
@@ -260,11 +140,10 @@ sp::BitMap sp::line(vector2i start, vector2i end)
 				int bit_pos = (i * line_segment.m_size.x) + x_start;
 				if (switch_angle)
 				{
-					//bit_pos = ((y_distance -  i) * line_segment.m_size.x) + abs(x_start);
 					bit_pos = ((y_distance - i) * line_segment.m_size.x) + x_start;
 				}
 
-				line_segment.m_pixelPosMap[bit_pos] = 1;
+				line_segment.m_bitMapData[bit_pos] = 1;
 
 				offset += delta;
 				if(offset >= treshold)
@@ -277,3 +156,4 @@ sp::BitMap sp::line(vector2i start, vector2i end)
 		return line_segment;	
 	}
 }
+//-----------------------------------------------------

@@ -1,10 +1,11 @@
 #include "spKeyboard.h"
 #include <iostream>
 
+//==============KEYBOARD==============
+
 //-----------------------------------------------------
 sp::InputStateMap sp::Keyboard::m_keyMap;
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -20,7 +21,6 @@ bool sp::Keyboard::getKeyPress(const KeyCode& key)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 bool sp::Keyboard::getKeyRelease(const KeyCode& key)
 {
@@ -34,7 +34,6 @@ bool sp::Keyboard::getKeyRelease(const KeyCode& key)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 bool sp::Keyboard::getKeyIsPressed(const KeyCode& key)
 {
@@ -45,7 +44,6 @@ bool sp::Keyboard::getKeyIsPressed(const KeyCode& key)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 bool sp::Keyboard::getKeyIsReleased(const KeyCode& key)
 {
@@ -54,7 +52,6 @@ bool sp::Keyboard::getKeyIsReleased(const KeyCode& key)
     return false;
 }
 //-----------------------------------------------------
-
 
 
 //==========LINUX IMPLEMENTATION==========
@@ -78,7 +75,6 @@ void sp::Keyboard::updateKeyMap(Event& event)
 }
 #endif
 //-----------------------------------------------------
-
 
 
 //==========WINDOWS IMPLEMENTATION==========
@@ -106,7 +102,6 @@ void sp::Keyboard::updateKeyMap(Event& event)
 }
 #endif
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -205,7 +200,6 @@ void sp::Keyboard::init()
         setNewKey(L_shift, clearState);
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------

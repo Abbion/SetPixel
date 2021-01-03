@@ -1,6 +1,6 @@
 #include "spColor.h"
 
-//-----------------------------------------------------
+//==============COLOR==============
 sp::Color::Color(SP_UINT8 r, SP_UINT8 g, SP_UINT8 b, SP_UINT8 a) :
     red(r), green(g), blue(b), alpha(a)
 {
@@ -25,10 +25,12 @@ unsigned long sp::Color::getHexRGB() const
 //-----------------------------------------------------
 
 
+//-----------------------------------------------------
 unsigned long sp::Color::getHexBGR() const
 {
     return ((blue & 0xff) << 16) + ((green & 0xff) << 8) + (red & 0xff);
 }
+//-----------------------------------------------------
 
 
 //-----------------------------------------------------
@@ -37,5 +39,20 @@ bool sp::Color::operator!=(const Color& col) const
     if(red != col.red && green != col.green && blue != col.blue)
         return true;
     return false;
+}
+//-----------------------------------------------------
+
+
+
+//-----------------------------------------------------
+sp::Color sp::Color::operator+(const Color& col)
+{
+    return sp::Color(this->red + col.red, this->green + col.green, this->blue + col.blue);
+}
+
+
+sp::Color sp::Color::operator*(const float& scalar)
+{
+    return sp::Color(this->red * scalar, this->green * scalar, this->blue * scalar);
 }
 //-----------------------------------------------------

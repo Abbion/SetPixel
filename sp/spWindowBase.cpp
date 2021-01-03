@@ -9,7 +9,6 @@ void sp::WindowBase::getSize(int *width, int *height) const
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::WindowBase::getPosition(int *x_pos, int *y_pos) const
 {

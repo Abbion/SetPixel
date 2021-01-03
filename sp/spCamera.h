@@ -1,21 +1,24 @@
 #ifndef _SP_CAMERA_H_
 #define _SP_CAMERA_H_
+#include <vector>
 #include "spCoreDefined.h"
 #include "spMath.h"
-#include <vector>
 
-namespace sp{
+
+namespace sp
+{
+    //Camera class for 3D projection
     class Camera
     {
     public:
         Camera(SP_FLOAT nearPlane, SP_FLOAT farPlane, SP_FLOAT angle);
 
-        void update();
+        SP_FLOAT getNear() const { return m_near; }
+        SP_FLOAT getFar() const { return m_far; }
         sp::Matrix4 getCameraTransform();
         std::vector<sp::vector3f> getCameraClipPlanes() const;
 
-        SP_FLOAT getNear() { return m_near; }
-        SP_FLOAT getFar() { return m_far; }
+        void update();
 
     private:
         sp::vector3f m_position;

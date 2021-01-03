@@ -25,7 +25,7 @@ void SandBoxOne::update()
 	double rot_y = 0.0;
 	double rot_z = 0.0;
 
-	sp::ModelLoader test("E:/Silniki/3. SetPixel/Models/Cat.obj");
+	sp::ModelLoader test("E:/Silniki/3. SetPixel/Models/Cat.obj", false);
 
     while (m_window.isOpen())
 	{
@@ -77,7 +77,6 @@ void SandBoxOne::update()
 		}
 
 		sp::Matrix4 M1;
-		sp::Matrix4 M2;
 		sp::Matrix4 move = sp::Transform::translate(sp::vector3f(pos_x, pos_y, pos_z));
 		sp::Matrix4 rotate = sp::Transform::rotate(sp::vector3f(rot_x, rot_y, rot_z));
 		sp::Matrix4 projection = sp::Transform::cameraProjectionMatrix(0.5, 5, 39.6);
@@ -113,20 +112,14 @@ void SandBoxOne::update()
 
 			sp::Matrix4 moveIn = sp::Transform::translate(moveIner[i]);
 			M1 = moveIn;
-			sp::Transform::applyTransform(model, M1);
-			sp::clipToCamera(model, m_camera);
+			//sp::Transform::applyTransform(model, M1);
+
 			M1 = view * projection;
 			sp::Transform::applyTransform(model, M1);
 			
-			if (sp::Keyboard::getKeyPress(sp::Keyboard::KeyCode::Space))
-			{
-				std::cout << "--------------------------------\n";
-				for (int i = 0; i < 18; i++)
-					std::cout << model[i] << std::endl;
-			}
 
-			sp::BitMap cubeMesh = sp::Mesh(model);
-			m_window.draw(cubeMesh);
+			sp::Model cubeMesh = sp::GenerateModel(model, sp::fillType::COLOR);	//VIEW CLIPPING HERE
+			m_window.draw(cubeMesh.bm);
 		}
 		m_window.display();
 	}

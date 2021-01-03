@@ -13,7 +13,6 @@ bool sp::PixelWindow::m_panicClose = false;
 //-----------------------------------------------------
 
 
-
 //==========LINUX IMPLEMENTATION==========
 #if unix
 sp::PixelWindow::PixelWindow(unsigned int width, unsigned int height, const char* title)
@@ -74,7 +73,6 @@ sp::PixelWindow::PixelWindow(unsigned int width, unsigned int height, const char
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 sp::PixelWindow::~PixelWindow()
 {
@@ -90,7 +88,6 @@ sp::PixelWindow::~PixelWindow()
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::PixelWindow::setSize(unsigned int width, unsigned int height)
 {
@@ -102,14 +99,12 @@ void sp::PixelWindow::setSize(unsigned int width, unsigned int height)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::PixelWindow::setPosition(int x_pos, int y_pos)
 {
     XMoveWindow(m_display, m_window, x_pos, y_pos);
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -122,14 +117,12 @@ void sp::PixelWindow::setTitle(const char* title)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::PixelWindow::close()
 {
     m_running = false;
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -172,7 +165,6 @@ void sp::PixelWindow::getNextEvent(Event& event)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 int sp::PixelWindow::peekEvents()
 {
@@ -180,7 +172,6 @@ int sp::PixelWindow::peekEvents()
 }
 #endif
 //-----------------------------------------------------
-
 
 
 //==========WINDOWS IMPLEMENTATION==========
@@ -250,7 +241,6 @@ sp::PixelWindow::PixelWindow(unsigned int width, unsigned int height, const char
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 sp::PixelWindow::~PixelWindow()
 {
@@ -258,7 +248,6 @@ sp::PixelWindow::~PixelWindow()
     PostQuitMessage(0);
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -277,7 +266,6 @@ void sp::PixelWindow::setSize(unsigned int width, unsigned int height)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::PixelWindow::setPosition(int x_pos, int y_pos)
 {
@@ -292,7 +280,6 @@ void sp::PixelWindow::setPosition(int x_pos, int y_pos)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::PixelWindow::setTitle(const char* title)
 {
@@ -301,14 +288,12 @@ void sp::PixelWindow::setTitle(const char* title)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::PixelWindow::close()
 {
     m_running = false;
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -324,6 +309,7 @@ void sp::PixelWindow::getNextEvent(Event& event)
     {
         RECT windowRect;
         GetClientRect(m_window, &windowRect);
+
 
         if (m_width != windowRect.right || m_height != windowRect.bottom)
         {
@@ -361,7 +347,6 @@ void sp::PixelWindow::getNextEvent(Event& event)
     }
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -404,7 +389,6 @@ void sp::PixelWindow::setIcon()
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::PixelWindow::getCorrectWindowSize(int* pos_x, int* pos_y, int* width, int* height)
 {
@@ -422,7 +406,6 @@ void sp::PixelWindow::getCorrectWindowSize(int* pos_x, int* pos_y, int* width, i
 }
 #endif
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------

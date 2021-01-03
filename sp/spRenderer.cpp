@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
+#include <limits>
 
 #if unix
 #include <unistd.h>
@@ -27,7 +28,6 @@ void sp::Renderer::setClearColor(Color& col)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 bool sp::Renderer::initRenderer(Display* dis, Window* win)
 {
@@ -42,7 +42,6 @@ bool sp::Renderer::initRenderer(Display* dis, Window* win)
     return true;
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -66,7 +65,6 @@ void sp::Renderer::setRenderSpaceSize(int width, int height)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::Renderer::clear()
 {
@@ -79,7 +77,6 @@ void sp::Renderer::clear()
     }
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -101,7 +98,6 @@ void sp::Renderer::draw(const Pixel& drawablePixel)
     */
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -127,7 +123,6 @@ void sp::Renderer::drawSet(Pixel* drawablePixelSet, int pixCount)
     */
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -165,7 +160,6 @@ void sp::Renderer::draw(const BitMap& bitMap)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::Renderer::display()
 {
@@ -190,7 +184,6 @@ void sp::Renderer::display()
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------x
 void sp::Renderer::calculateFps()
 {
@@ -208,7 +201,6 @@ void sp::Renderer::calculateFps()
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 //The fps value may flicker due to the way the X11 implements drawing (event based).
 void sp::Renderer::displayFps()
@@ -223,7 +215,6 @@ void sp::Renderer::displayFps()
 #endif
 
 
-
 //==========WINDOWS IMPLEMENTATION==========
 #if _WIN32
 //-----------------------------------------------------
@@ -234,16 +225,15 @@ sp::Renderer::Renderer()
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 sp::Renderer::~Renderer()
 {
     delete m_bitmap;
     delete[] m_pixelMap;
+    delete[] m_depthMap;
     Gdiplus::GdiplusShutdown(m_gdiplusToken);
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -252,7 +242,6 @@ void sp::Renderer::setClearColor(Color& col)
     m_clearColor = col;
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -264,17 +253,19 @@ void sp::Renderer::clear()
     for(int i = 0; i < m_windowSpaceHeight; i++)
     {
         int y_pos = i * m_horizontalScanLine;
+        int y_posD = i * m_windowSpaceHeight;
         for (int j = 0; j < m_windowSpaceWidth; j++)
         {
             int pixelLine = y_pos + (j * 3);
             m_pixelMap[pixelLine] = m_clearColor.blue;
             m_pixelMap[pixelLine + 1] = m_clearColor.green;
             m_pixelMap[pixelLine + 2] = m_clearColor.red;
+
+            m_depthMap[y_posD + j] = -999999999.9;
         }
     }
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -305,7 +296,6 @@ void sp::Renderer::draw(const Pixel& drawablePixel)
     */ 
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -342,7 +332,6 @@ void sp::Renderer::drawSet(Pixel* drawablePixelSet, int pixCount)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::Renderer::draw(const BitMap& bitMap)
 {
@@ -353,7 +342,7 @@ void sp::Renderer::draw(const BitMap& bitMap)
     {
         for (int p_x = 0; p_x < bitMap.m_size.x; p_x++)
         {
-            if(bitMap.m_pixelPosMap[bitPixel])
+            if(bitMap.m_bitMapData[bitPixel])
             {
                 for (int i = 0; i < m_pixelSize; i++)
                 {
@@ -383,12 +372,48 @@ void sp::Renderer::draw(const BitMap& bitMap)
 //-----------------------------------------------------
 
 
+//-----------------------------------------------------
+void sp::Renderer::draw(const sp::PixelList& pixelList)
+{
+    int limitX = (m_windowSpaceWidth / m_pixelSize) - 1;
+    int limitY = (m_windowSpaceHeight / m_pixelSize) - 1;
+
+    for (sp::PixelList::const_iterator itr = pixelList.begin(); itr != pixelList.end(); itr++)
+    {
+        if (itr->getPosition().x > limitX || itr->getPosition().y > limitY)
+            continue;
+            
+       int Ypos = itr->getPosition().y * m_pixelSize;
+       int Xpos = itr->getPosition().x * m_pixelSize;
+
+       int dpos = itr->getPosition().y * m_windowSpaceHeight + itr->getPosition().x;
+       if (m_depthMap[dpos] < itr->getDepth())
+       {
+           m_depthMap[dpos] = itr->getDepth();
+
+           for (int i = 0; i < m_pixelSize; i++)
+           {
+               int verticalPixelPosition = m_horizontalScanLine * (Ypos + i);
+               for (int j = 0; j < m_pixelSize; j++)
+               {
+                   int pixelPos = verticalPixelPosition + (Xpos + j) * 3;
+                   m_pixelMap[pixelPos] = itr->getColor().blue;
+                   m_pixelMap[pixelPos + 1] = itr->getColor().green;
+                   m_pixelMap[pixelPos + 2] = itr->getColor().red;
+               }
+           }
+       }
+        
+    }
+}
+//-----------------------------------------------------
+
 
 //-----------------------------------------------------
 void sp::Renderer::display()
 {
     Gdiplus::Graphics graphics(m_windowContext);
-    //m_backRenderer->DrawImage(m_bitmap, 0, 0);      //Wierd memeory usage picks 🤔
+    m_backRenderer->DrawImage(m_bitmap, 0, 0, 24, 0);      //Wierd memeory usage picks
     if(m_showFps)
     {
         displayFps(graphics);
@@ -404,7 +429,6 @@ void sp::Renderer::display()
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 bool sp::Renderer::initRenderer(HWND* win)
 {
@@ -412,7 +436,6 @@ bool sp::Renderer::initRenderer(HWND* win)
     return true;
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -427,6 +450,7 @@ void sp::Renderer::setRenderSpaceSize(int width, int height)
      if(m_pixelMap != nullptr)
      {
         delete[] m_pixelMap;
+        delete[] m_depthMap;
         delete m_bitmap;
         //delete m_backBitmap;
         delete m_backRenderer;
@@ -437,6 +461,7 @@ void sp::Renderer::setRenderSpaceSize(int width, int height)
     m_horizontalScanLine = (m_windowSpaceWidth * 3) + m_padding;
 
     m_pixelMap = new BYTE[m_stride * m_windowSpaceHeight];
+    m_depthMap = new SP_FLOAT[m_windowSpaceWidth * m_windowSpaceWidth];
     m_bitmap = new Gdiplus::Bitmap(m_windowSpaceWidth, m_windowSpaceHeight, m_stride, PixelFormat24bppRGB, m_pixelMap);
 
     //m_backBitmap = new Gdiplus::Bitmap(m_windowSpaceWidth, m_windowSpaceHeight);
@@ -444,7 +469,6 @@ void sp::Renderer::setRenderSpaceSize(int width, int height)
     m_backRenderer = Gdiplus::Graphics::FromImage(m_bitmap);
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -462,7 +486,6 @@ void sp::Renderer::calculateFps()
     m_timeStart = std::chrono::high_resolution_clock::now();
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------

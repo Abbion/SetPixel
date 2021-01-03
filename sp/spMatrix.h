@@ -62,7 +62,7 @@ namespace sp {
 
         static void applyTransform(sp::vector2f* vertexArr, int count, const Matrix3& transform);
         static void applyTransform(sp::vector3f* vertexArr, int count, const Matrix4& transform);
-        static void applyTransform(std::vector<sp::vector3f>& vertexVec, const Matrix4& transform);
+        static void applyTransform(std::vector<sp::vector3f>& vertexVec, const Matrix4& transform, int offset = 0, int startFrom = 0);
     };
 
     //--------------------------

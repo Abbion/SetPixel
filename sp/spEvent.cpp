@@ -94,7 +94,6 @@ void sp::Event::updateEventType()
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 //Warning: the system pointer works different for every os. Use only if really needed.
 unsigned int sp::Event::getSystemEventPointer()
@@ -104,7 +103,6 @@ unsigned int sp::Event::getSystemEventPointer()
     return 0;
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -122,7 +120,6 @@ int sp::Event::getSystemKey() const
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 //Warning: only WIN32 implementation. Use only if really needed.
 int sp::Event::getSystemButton() const
@@ -138,7 +135,6 @@ int sp::Event::getSystemButton() const
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::Event::clearRepeated()
 {
@@ -152,8 +148,6 @@ void sp::Event::clearRepeated()
     }
 }
 //-----------------------------------------------------
-
-
 
 //-----------------------------------------------------
 long __stdcall sp::Event::WindowProcedure(HWND window, unsigned int msg, WPARAM wp, LPARAM lp)

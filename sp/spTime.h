@@ -2,9 +2,9 @@
 #define _SP_TIME_H_
 #include <chrono>
 
-//Time implementation.
 namespace sp
 {
+	//Time implementation.
 	#if unix
 	typedef std::chrono::_V2::system_clock::time_point time;
 	#elif _WIN32

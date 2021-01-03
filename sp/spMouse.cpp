@@ -24,7 +24,6 @@ HWND* sp::Mouse::ptr_window = nullptr;
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::Mouse::init()
 {
@@ -45,7 +44,6 @@ void sp::Mouse::init()
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 bool sp::Mouse::getButtonPress(const ButtonCode& button)
 {
@@ -57,7 +55,6 @@ bool sp::Mouse::getButtonPress(const ButtonCode& button)
     return false;
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -73,7 +70,6 @@ bool sp::Mouse::getButtonRelease(const ButtonCode& button)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 bool sp::Mouse::getButtonIsPressed(const ButtonCode& button)
 {
@@ -82,7 +78,6 @@ bool sp::Mouse::getButtonIsPressed(const ButtonCode& button)
     return false;
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -95,7 +90,6 @@ bool sp::Mouse::getButtonIsReleased(const ButtonCode& button)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 int sp::Mouse::getScrolling()
 {
@@ -104,7 +98,6 @@ int sp::Mouse::getScrolling()
     return scrollAmount;
 }
 //-----------------------------------------------------
-
 
 
 //==========LINUX IMPLEMENTATION==========
@@ -129,7 +122,6 @@ void sp::Mouse::getMousePosition(int *pos_X, int *pos_Y, bool relativeToWindow)
     }
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -168,7 +160,6 @@ void sp::Mouse::updateButtonMap(Event& event)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::Mouse::getDeltaMousePosition(int *pos_X, int *pos_Y)
 {   
@@ -202,7 +193,6 @@ void sp::Mouse::getDeltaMousePosition(int *pos_X, int *pos_Y)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::Mouse::setMouseSource(Display* display, Window* window)
 {
@@ -211,7 +201,6 @@ void sp::Mouse::setMouseSource(Display* display, Window* window)
     setCenterPoint();
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -240,7 +229,6 @@ void sp::Mouse::hideMouse(bool hide)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::Mouse::setCenterPoint()
 {
@@ -250,7 +238,6 @@ void sp::Mouse::setCenterPoint()
 }
 //-----------------------------------------------------
 #endif
-
 
 
 //==========WINDOWS IMPLEMENTATION==========
@@ -274,7 +261,6 @@ void sp::Mouse::getMousePosition(int *pos_X, int *pos_Y, bool relativeToWindow)
     *pos_Y = position.y;
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -334,7 +320,6 @@ void sp::Mouse::updateButtonMap(Event& event)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::Mouse::getDeltaMousePosition(int *pos_X, int *pos_Y)
 {   
@@ -365,14 +350,12 @@ void sp::Mouse::getDeltaMousePosition(int *pos_X, int *pos_Y)
 //-----------------------------------------------------
 
 
-
 //-----------------------------------------------------
 void sp::Mouse::setMouseSource(HWND* window)
 {
     ptr_window = window;
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------
@@ -382,6 +365,7 @@ void sp::Mouse::hideMouse(bool hide)
 }
 //-----------------------------------------------------
 
+
 //-----------------------------------------------------
 void sp::Mouse::setCenterPoint()
 {
@@ -389,9 +373,7 @@ void sp::Mouse::setCenterPoint()
     m_screenCenterY = GetSystemMetrics(SM_CYSCREEN) / 2;
 }
 //-----------------------------------------------------
-
 #endif
-
 
 
 //-----------------------------------------------------
@@ -400,7 +382,6 @@ void sp::Mouse::lockMouse(bool lock)
     m_lock = lock;
 }
 //-----------------------------------------------------
-
 
 
 //-----------------------------------------------------

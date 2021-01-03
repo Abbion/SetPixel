@@ -1,6 +1,5 @@
-#include "spGfxShapes.h"
-#include "spGfxLine.h"
-#include "spAlgorithms.h"
+#include "spShapes.h"
+#include "spLine.h"
 #include <iostream>
 
 
@@ -15,7 +14,10 @@ sp::BitMap sp::Triangle(const sp::vector2f& p1, const sp::vector2f& p2, const sp
    bm.marge(triangle_sides, 3);
    return bm;
 }
+//-----------------------------------------------------
 
+
+//-----------------------------------------------------
 sp::BitMap sp::Triangle(const sp::vector3f& p1, const sp::vector3f& p2, const sp::vector3f& p3)
 {
    sp::vector2f p1Vec2(p1.x, p1.y);
@@ -69,7 +71,7 @@ sp::BitMap sp::Circle(sp::vector2f pos, SP_FLOAT radius, bool scaleX)
    //---------------------------
 
    if(v_radius < 1)  //Trivial solution
-      bm.m_pixelPosMap[0] = 1;
+      bm.m_bitMapData[0] = 1;
 
    else
    {
@@ -160,7 +162,7 @@ sp::BitMap sp::Elipse(sp::vector2f pos, SP_FLOAT radiusX, SP_FLOAT radiusY)
 
    //Trivial solutions----------
    if(v_radius.x < 1 && v_radius.y < 1)
-      bm.m_pixelPosMap[0] = 1;
+      bm.m_bitMapData[0] = 1;
    else if (v_radius.y < 1) {
        sp::BitMap line = sp::line(sp::vector2i(v_pos.x, v_pos.y + v_size.y / 2), sp::vector2i(v_pos.x + v_size.x, v_pos.y + v_size.y / 2));
        bm.marge(line);
@@ -281,87 +283,9 @@ sp::BitMap sp::Elipse(sp::vector2f pos, SP_FLOAT radiusX, SP_FLOAT radiusY)
 //-----------------------------------------------------
 
 
-sp::BitMap sp::Mesh(sp::vector3f* vertex, int count, sp::Camera& cam, bool faceCulling, bool switchCullingDirection)
-{
-   sp::BitMap finalMesh;
-   if(count % 3 != 0)
-   {
-      count -= count % 3;
-   }
-
-   for (int i = 0; i < count; i += 3)
-   {
-      bool visible = sp::faceCulling(vertex[0 + i], vertex[1 + i], vertex[2 + i]);
-      if(switchCullingDirection)
-         visible = !visible; 
-
-      if(visible || !faceCulling)
-      {
-          /*
-         std::vector<sp::vector3f> output;
-         sp::clipTriangleToView(vertex[0 + i], vertex[1 + i], vertex[2 + i], output, cam);
-         //std::cout << output.size() << std::endl;
-         
-         for (int k = 0; k < output.size(); k += 3)
-         {
-             sp::BitMap triangles = sp::Triangle(output[k], output[k + 1], output[k + 2]);
-
-             if (triangles.m_pixelPosMap != nullptr)
-                 finalMesh.marge(triangles);
-         }
-         */
-         
-         
-         
-         sp::BitMap triangles = sp::Triangle(vertex[0 + i], vertex[1 + i], vertex[2 + i]);
-         if (triangles.m_pixelPosMap != nullptr)
-            finalMesh.marge(triangles);            
-      }
-   }
-
-   return finalMesh;
-}
-
-sp::BitMap sp::Mesh(std::vector<sp::vector3f>& vertexVec, bool faceCulling, bool switchCullingDirection)
-{
-   //Left Top Right Down 
-   std::vector<sp::vector3f> viewPlanes = {sp::vector3f(-1.0, 0.0, 0.0), sp::vector3f(1.0, 0.0, 0.0), sp::vector3f(0.0, 1.0, 0.0), sp::vector3f(0.0, -1.0, 0.0),
-                                            sp::vector3f(1.0, 0.0, 0.0),sp::vector3f(-1.0, 0.0, 0.0), sp::vector3f(0.0, -1.0, 0.0), sp::vector3f(0.0, 1.0, 0.0) };
-
-   sp::BitMap finalMesh;
-   int count = vertexVec.size(); 
-   if(count % 3 != 0)
-   {
-      count -= count % 3;
-   }
-
-   for (int i = 0; i < count; i += 3)
-   {
-      bool visible = sp::faceCulling(vertexVec[0 + i], vertexVec[1 + i], vertexVec[2 + i]);
-      if(switchCullingDirection)
-         visible = !visible; 
-
-      if(visible || !faceCulling)
-      {         
-         std::vector<sp::vector3f> output;
-         sp::clipTriangleToPlanes(vertexVec[0 + i], vertexVec[1 + i], vertexVec[2 + i], output, viewPlanes);
-         
-         for (int k = 0; k < output.size(); k += 3)
-         {
-             sp::BitMap triangles = sp::Triangle(output[k], output[k + 1], output[k + 2]);
-             if (triangles.m_pixelPosMap != nullptr)
-                 finalMesh.marge(triangles);
-         }
-      }
-   }
-
-   return finalMesh;
-}
-
-
 //Often used function to plot points to bitmap---------
 static inline void sp::PlotPointToBitmap(const sp::vector2i& plot, sp::BitMap& bm)
 {
-   bm.m_pixelPosMap[(plot.y * bm.m_size.x) + plot.x] = 1;
+   bm.m_bitMapData[(plot.y * bm.m_size.x) + plot.x] = 1;
 }
 //-----------------------------------------------------

@@ -2,9 +2,9 @@
 #define _SP_COLOR_H_
 #include "spCoreDefined.h"
 
-//Color implementation.
 namespace sp {
 
+    //Color structure implementation
     class Color
     {
     public:
@@ -15,6 +15,8 @@ namespace sp {
         unsigned long getHexBGR() const;    //Returns the color in HexBGR format. A windows thing.
 
         bool operator!=(const Color& col) const;
+        Color operator+(const Color& col);
+        Color operator*(const float& scalar);
     
     public:
         SP_UINT8 red, green, blue, alpha;
