@@ -21,9 +21,10 @@ namespace sp
         int getFps() const;                             //Returns fps value.
 
         virtual void clear() = 0;                                          //Clears the window with clear color.
-        virtual void draw(const Pixel& drawablePixel) = 0;                 //Draws one pixel.
-        virtual void drawSet(Pixel* drawablePixelSet, int pixCount) = 0;   //Draws a set of pixels.
+        //virtual void draw(const Pixel& drawablePixel) = 0;                 //Draws one pixel.
+        //virtual void drawSet(Pixel* drawablePixelSet, int pixCount) = 0;   //Draws a set of pixels.
         virtual void draw(const BitMap& bitMap) = 0;
+        virtual void draw(const sp::PixelList& pixelList) = 0;
         virtual void display() = 0;                                        //Displays everything.
 
     protected:

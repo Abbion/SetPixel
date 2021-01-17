@@ -16,3 +16,6 @@ Windows/SetPixel/SPICO.ico
 sp/.vscode/settings.json
 Logo
 Models
+Linux/*.bmp
+Linux/*.obj
+
