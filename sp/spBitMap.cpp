@@ -1,5 +1,5 @@
 #include "spBitMap.h"
-
+#include <string.h>
 
 //==============BITMAP==============
 sp::BitMap::BitMap() :

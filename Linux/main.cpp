@@ -10,21 +10,12 @@ int main()
 	sp::Event event;
 
 	MyWindow.setPixelSize(4);
-	
-	sp::vector2f p1(-0.5f, -0.5f);
-	sp::vector2f c1(0.0f, -0.5f);
-	sp::vector2f p2(0.5f, 0.5f);
-	sp::vector2f c2(0.0f, 0.5f);
-
-	float time = 0.0f;
-
-	double pos_x = -0.4;
-	double pos_y = 0.5;
-
-	double pos_x2 = 0.4;
-	double pos_y2 = -0.5;
 	MyWindow.showFps(true);
 
+	sp::ModelLoader model("Spyro.obj", true);
+	sp::BitMapTexture tex("Body.bmp", false, true);
+	
+	sp::Camera cam(0.2, 5.0, 90);
 
 	while (MyWindow.isOpen())
 	{
@@ -40,33 +31,35 @@ int main()
 			MyWindow.close();
 		}
 
-		if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::A))
-			pos_x -= 0.01;
-		if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::D))
-			pos_x += 0.01;
-		if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::W))
-			pos_y += 0.01;
-		if(sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::S))
-			pos_y -= 0.01;
+	cam.update();
 
-		if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::Left))
-			pos_x2 -= 0.01;
-		if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::Right))
-			pos_x2 += 0.01;
-		if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::Up))
-			pos_y2 += 0.01;
-		if (sp::Keyboard::getKeyIsPressed(sp::Keyboard::KeyCode::Down))
-			pos_y2 -= 0.01;
+	/*
+		std::vector<sp::vector3f> triData = {   sp::vector3f(-0.5, -0.5, 0.0), sp::vector3f(1.0, 0.0, 0.0),
+												sp::vector3f(0.5, -0.5, 0.0), sp::vector3f(0.0, 1.0, 0.0),
+												sp::vector3f(0.0, 0.5, 0.0), sp::vector3f(0.0, 0.0, 1.0) };
 
+	*/
 
-		sp::BitMap triangleTest = sp::Triangle(sp::vector2f(-0.5f, -0.5f), sp::vector2f(0.5f, -0.5f), sp::vector2f(0.0f, 0.5f));
-		//sp::vector2f points[4] = {sp::vector2f(0.2, 0.5), sp::vector2f(-0.4, 0.7), sp::vector2f(-0.7, -0.5), sp::vector2f(0.8, -0.5)};
-		//sp::BitMap splineTest = sp::Spline(points, 4, true);
-		//sp::BitMap bezier = sp::CubicBezier(sp::vector2f(-0.5f, 0.0f), sp::vector2f(0.5f, 0.0f), sp::vector2f(pos_x, pos_y), sp::vector2f(pos_x2, pos_y2));
+	std::vector<sp::vector3f> data = model.getModelData();
+	sp::Matrix4 M1;
+	sp::Matrix4 translate = sp::Transform::translate(sp::vector3f(0.0, -1.0, 0.5));
+	sp::Matrix4 scale = sp::Transform::scale(sp::vector3f(0.1f, 0.1f, 0.1f));
+	sp::Matrix4 projection = sp::Transform::cameraProjectionMatrix(0.5, 5, 39.6);
+	sp::Matrix4 view = cam.getCameraTransform();
+	M1 = scale * translate * view * projection;
+
+	sp::Transform::applyTransform(data, M1, 1);
+	
+
+		sp::Model tri = sp::GenerateModel(data, sp::fillType::TEXTURE, &tex);
+
 		MyWindow.clear();
-		MyWindow.draw(triangleTest);
+		for (int i = 0; i < tri.plv.size(); i++)
+		{
+			MyWindow.draw(tri.plv[i]);
+		}
+		//MyWindow.draw(tri.bm);
 		MyWindow.display();
-		time += 0.001f;
 	}
 
 	return 0;

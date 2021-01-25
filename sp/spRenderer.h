@@ -24,13 +24,14 @@ namespace sp
     {
     public:
         Renderer() {}
-        ~Renderer() { delete[] m_charMap; }
+        ~Renderer();
         virtual void setClearColor(Color& col);
 
         virtual void clear();
-        virtual void draw(const Pixel& drawablePixel);
-        virtual void drawSet(Pixel* drawablePixelSet, int pixCount);
+        //virtual void draw(const Pixel& drawablePixel);
+        //virtual void drawSet(Pixel* drawablePixelSet, int pixCount);
         virtual void draw(const BitMap& bitMap);
+        virtual void draw(const sp::PixelList& pixelList);
         virtual void display();
 
     protected:
@@ -47,6 +48,7 @@ namespace sp
 
         XImage* m_imageMap = nullptr;
         char* m_charMap = nullptr;
+        SP_FLOAT* m_depthMap = nullptr;
     
         time m_timeStart;
         time m_timeStop;
@@ -65,10 +67,10 @@ namespace sp
         virtual void setClearColor(Color& col); //Why can't I const this???
 
         virtual void clear();
-        virtual void draw(const Pixel& drawablePixel);
-        virtual void drawSet(Pixel* drawablePixelSet, int pixCount);
+        //virtual void draw(const Pixel& drawablePixel);
+        //virtual void drawSet(Pixel* drawablePixelSet, int pixCount);
         virtual void draw(const BitMap& bitMap);
-        void draw(const sp::PixelList& pixelList);
+        virtual void draw(const sp::PixelList& pixelList);
 
         virtual void display();
 

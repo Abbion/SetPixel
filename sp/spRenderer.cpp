@@ -16,6 +16,16 @@
 
 //==========LINUX IMPLEMENTATION==========
 #if unix
+
+//-----------------------------------------------------
+sp::Renderer::~Renderer() 
+{
+    delete[] m_charMap; 
+    delete[] m_depthMap; 
+}
+//-----------------------------------------------------
+
+
 //-----------------------------------------------------
 void sp::Renderer::setClearColor(Color& col)
 {
@@ -55,9 +65,13 @@ void sp::Renderer::setRenderSpaceSize(int width, int height)
     sp::coordConverter::m_invAspectRatio = (SP_FLOAT)sp::coordConverter::m_renderHeight / (SP_FLOAT)sp::coordConverter::m_renderWidth;
 
     if(m_charMap)
+    {
+        delete[] m_depthMap;
         delete[] m_charMap;
+    }
     
     m_charMap = new char[m_windowSpaceWidth*m_windowSpaceHeight*4];
+    m_depthMap = new SP_FLOAT[m_windowSpaceWidth * m_windowSpaceWidth];
     int screen_num = DefaultScreen(ptr_display);
 	Visual *visual = DefaultVisual(ptr_display, screen_num);
     m_imageMap = XCreateImage(ptr_display, visual ,DefaultDepth(ptr_display, screen_num), ZPixmap, 0, m_charMap, width, height, 32, 0);
@@ -70,57 +84,13 @@ void sp::Renderer::clear()
 {
     for (int i = 0; i < m_windowSpaceHeight; i++)
     {
+        int y_posD = i * m_windowSpaceHeight;
         for (int j = 0; j < m_windowSpaceWidth; j++)
         {
             XPutPixel(m_imageMap,j,i, m_clearColor.getHexRGB());
+            m_depthMap[y_posD + j] = -999999999.9;
         }   
     }
-}
-//-----------------------------------------------------
-
-
-//-----------------------------------------------------
-void sp::Renderer::draw(const Pixel& drawablePixel)
-{
-    /*
-    for (int i = 0; i < m_pixelSize; i++)
-    {
-        int Ypos = (drawablePixel.getPosition().y * m_pixelSize) + i;
-        for (int j = 0; j < m_pixelSize; j++)
-        {
-            int Xpos = (drawablePixel.getPosition().x * m_pixelSize) + j;
-            if(pixelInRenderSpace(Xpos, Ypos))
-            {
-                XPutPixel(m_imageMap, Xpos, Ypos, drawablePixel.getColor().getHexRGB());
-            }
-        }    
-    }
-    */
-}
-//-----------------------------------------------------
-
-
-//-----------------------------------------------------
-void sp::Renderer::drawSet(Pixel* drawablePixelSet, int pixCount)
-{
-    /*
-    for (int k = 0; k < pixCount; k++)
-    {
-        for (int i = 0; i < m_pixelSize; i++)
-        {
-            int Ypos = (drawablePixelSet[k].getPosition().y * m_pixelSize) + i;
-            
-            for (int j = 0; j < m_pixelSize; j++)
-            {
-                int Xpos = (drawablePixelSet[k].getPosition().x * m_pixelSize) + j;
-                if(pixelInRenderSpace(Xpos, Ypos))
-                {
-                    XPutPixel(m_imageMap, Xpos, Ypos, drawablePixelSet[k].getColor().getHexRGB());
-                }
-            }    
-        }
-    }
-    */
 }
 //-----------------------------------------------------
 
@@ -135,7 +105,7 @@ void sp::Renderer::draw(const BitMap& bitMap)
     {
         for (int p_x = 0; p_x < bitMap.m_size.x; p_x++)
         {
-            if(bitMap.m_pixelPosMap[bitPixel])
+            if(bitMap.m_bitMapData[bitPixel])
             {
                 for (int i = 0; i < m_pixelSize; i++)
                 {
@@ -157,6 +127,39 @@ void sp::Renderer::draw(const BitMap& bitMap)
         }
     }
 }   
+//-----------------------------------------------------
+
+
+//-----------------------------------------------------
+void sp::Renderer::draw(const sp::PixelList& pixelList)
+{
+    int limitX = (m_windowSpaceWidth / m_pixelSize) - 1;
+    int limitY = (m_windowSpaceHeight / m_pixelSize) - 1;
+
+    for (sp::PixelList::const_iterator itr = pixelList.begin(); itr != pixelList.end(); itr++)
+    {
+        if (itr->getPosition().x > limitX || itr->getPosition().y > limitY)
+            continue;
+            
+       int Ypos = itr->getPosition().y * m_pixelSize;
+       int Xpos = itr->getPosition().x * m_pixelSize;
+
+       int dpos = itr->getPosition().y * m_windowSpaceHeight + itr->getPosition().x;
+       if (m_depthMap[dpos] < itr->getDepth())
+       {
+           m_depthMap[dpos] = itr->getDepth();
+
+           for (int i = 0; i < m_pixelSize; i++)
+           {
+               for (int j = 0; j < m_pixelSize; j++)
+               {
+                   XPutPixel(m_imageMap, Xpos + j, Ypos + i, itr->getColor().getHexRGB());
+               }
+           }
+       }
+        
+    }
+}
 //-----------------------------------------------------
 
 
@@ -265,70 +268,6 @@ void sp::Renderer::clear()
         }
     }
 }
-//-----------------------------------------------------
-
-
-//-----------------------------------------------------
-void sp::Renderer::draw(const Pixel& drawablePixel)
-{
-    /*
-    sp::Color color = drawablePixel.getColor();
-
-    for (int i = 0; i < m_pixelSize; i++)
-    {
-        int Ypos = (drawablePixel.getPosition().y * m_pixelSize) + i;
-        unsigned int verticalPixelPosition = (Ypos * m_horizontalScanLine);
-
-        for (int j = 0; j < m_pixelSize; j++)
-        {
-            int Xpos = (drawablePixel.getPosition().x * m_pixelSize) + j;
-
-            if(pixelInRenderSpace(Xpos, Ypos))
-            {
-                unsigned int pixelPosition = verticalPixelPosition + (Xpos * 3);
-
-                m_pixelMap[pixelPosition] = color.blue;
-                m_pixelMap[pixelPosition + 1] = color.green;
-                m_pixelMap[pixelPosition + 2] = color.red;
-            }
-        }    
-    }
-    */ 
-}
-//-----------------------------------------------------
-
-
-//-----------------------------------------------------
-
-void sp::Renderer::drawSet(Pixel* drawablePixelSet, int pixCount)
-{
-    /*
-    for (int k = 0; k < pixCount; k++)
-    {
-        for (int i = 0; i < m_pixelSize; i++)
-        {
-            int Ypos = (drawablePixelSet[k].getPosition().y * m_pixelSize) + i;
-            unsigned int verticalPixelPosition = (Ypos * m_horizontalScanLine);
-
-            for (int j = 0; j < m_pixelSize; j++)
-            {
-                int Xpos = (drawablePixelSet[k].getPosition().x * m_pixelSize) + j;
-
-                if(pixelInRenderSpace(Xpos, Ypos))
-                {
-                    unsigned int pixelPosition = verticalPixelPosition + (Xpos * 3);
-
-                    sp::Color color = drawablePixelSet[k].getColor();
-                    m_pixelMap[pixelPosition] = color.blue;
-                    m_pixelMap[pixelPosition + 1] = color.green;
-                    m_pixelMap[pixelPosition + 2] = color.red;
-                }
-            }    
-        }
-    }
-    */
-}
-
 //-----------------------------------------------------
 
 

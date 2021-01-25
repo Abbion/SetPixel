@@ -1,66 +1,94 @@
 
-output: main.o keyboard.o mouse.o windowBase.o window.o rendererBase.o renderer.o event.o color.o pixel.o spgraphics.o spmath.o spGfxLine.o spGfxCurveLine.o spGfxShapes.o
-	g++ main.o keyboard.o mouse.o windowBase.o window.o rendererBase.o renderer.o event.o color.o pixel.o spgraphics.o spmath.o spGfxLine.o spGfxCurveLine.o spGfxShapes.o -o main -lX11
+output: main.o spKeyboard.o spMouse.o spWindowBase.o spWindow.o spRendererBase.o spRenderer.o spEvent.o spColor.o spPixel.o spMath.o spLine.o spCurveLine.o spShapes.o spModelLoader.o spModel.o spMatrix.o spFragmentsMapper.o spClippingAlgorithms.o spCamera.o spBitMap.o spBitMapLoader.o 
+	g++ main.o spKeyboard.o spMouse.o spWindowBase.o spWindow.o spRendererBase.o spRenderer.o spEvent.o spColor.o spPixel.o spMath.o spLine.o spCurveLine.o spShapes.o spModelLoader.o spModel.o spMatrix.o spFragmentsMapper.o spClippingAlgorithms.o spCamera.o spBitMap.o spBitMapLoader.o -o main -lX11
 
 main.o: main.cpp
 	@echo building main.cpp...
 	g++ -c -std=gnu++17 main.cpp
 
-keyboard.o: ../sp/keyboard.cpp ../sp/keyboard.h
-	@echo building keyboard.cpp...
-	g++ -c -std=gnu++17 ../sp/keyboard.cpp
+spKeyboard.o: ../sp/spKeyboard.cpp ../sp/spKeyboard.h
+	@echo building spKeyboard.cpp...
+	g++ -c -std=gnu++17 ../sp/spKeyboard.cpp
 
-mouse.o: ../sp/mouse.cpp ../sp/mouse.h
-	@echo building mouse.cpp...
-	g++ -c -std=gnu++17 ../sp/mouse.cpp
+spMouse.o: ../sp/spMouse.cpp ../sp/spMouse.h
+	@echo building spMouse.cpp...
+	g++ -c -std=gnu++17 ../sp/spMouse.cpp
 
-windowBase.o: ../sp/windowBase.cpp ../sp/windowBase.h
-	@echo building windowBase.cpp...
-	g++ -c -std=gnu++17 ../sp/windowBase.cpp
+spWindowBase.o: ../sp/spWindowBase.cpp ../sp/spWindowBase.h
+	@echo building spWindowBase.cpp...
+	g++ -c -std=gnu++17 ../sp/spWindowBase.cpp
 
-window.o: ../sp/window.cpp ../sp/window.h
-	@echo building window.cpp...
-	g++ -c -std=gnu++17 ../sp/window.cpp
+spWindow.o: ../sp/spWindow.cpp ../sp/spWindow.h
+	@echo building spWindow.cpp...
+	g++ -c -std=gnu++17 ../sp/spWindow.cpp
 
-rendererBase.o: ../sp/rendererBase.cpp ../sp/rendererBase.h
-	@echo building rendererBase.cpp...
-	g++ -c -std=gnu++17 ../sp/rendererBase.cpp 
+spRendererBase.o: ../sp/spRendererBase.cpp ../sp/spRendererBase.h
+	@echo building spRendererBase.cpp...
+	g++ -c -std=gnu++17 ../sp/spRendererBase.cpp 
 
-renderer.o: ../sp/renderer.cpp ../sp/renderer.h
-	@echo building renderer.cpp...
-	g++ -c -std=gnu++17 ../sp/renderer.cpp
+spRenderer.o: ../sp/spRenderer.cpp ../sp/spRenderer.h
+	@echo building spRenderer.cpp...
+	g++ -c -std=gnu++17 ../sp/spRenderer.cpp
 
-event.o: ../sp/event.cpp ../sp/event.h
-	@echo building event.cpp...
-	g++ -c -std=gnu++17 ../sp/event.cpp
+spEvent.o: ../sp/spEvent.cpp ../sp/spEvent.h
+	@echo building spEvent.cpp...
+	g++ -c -std=gnu++17 ../sp/spEvent.cpp
 
-color.o: ../sp/color.cpp ../sp/color.h
-	@echo building color.cpp...
-	g++ -c -std=gnu++17 ../sp/color.cpp
+spColor.o: ../sp/spColor.cpp ../sp/spColor.h
+	@echo building spColor.cpp...
+	g++ -c -std=gnu++17 ../sp/spColor.cpp
 
-pixel.o: ../sp/pixel.cpp ../sp/pixel.h
-	@echo building pixel.cpp...
-	g++ -c -std=gnu++17 ../sp/pixel.cpp
+spPixel.o: ../sp/spPixel.cpp ../sp/spPixel.h
+	@echo building spPixel.cpp...
+	g++ -c -std=gnu++17 ../sp/spPixel.cpp
 
-spgraphics.o: ../sp/spgraphics.cpp ../sp/spgraphics.h
-	@echo building spgraphics.cpp...
-	g++ -c -std=gnu++17 ../sp/spgraphics.cpp
+spMath.o: ../sp/spMath.cpp ../sp/spMath.h
+	@echo building spMath.cpp...
+	g++ -c -std=gnu++17 ../sp/spMath.cpp
 
-spmath.o: ../sp/spmath.cpp ../sp/spmath.h
-	@echo building spmath.cpp...
-	g++ -c -std=gnu++17 ../sp/spmath.cpp
+spLine.o: ../sp/spLine.cpp ../sp/spLine.h
+	@echo building spLine.cpp...
+	g++ -c -std=gnu++17 ../sp/spLine.cpp
 
-spGfxLine.o: ../sp/spGfxLine.cpp ../sp/spGfxLine.h
-	@echo building spGfxLine.cpp...
-	g++ -c -std=gnu++17 ../sp/spGfxLine.cpp
+spCurveLine.o: ../sp/spCurveLine.cpp ../sp/spCurveLine.h
+	@echo building spCurveLine.cpp...
+	g++ -c -std=gnu++17 ../sp/spCurveLine.cpp
 
-spGfxCurveLine.o: ../sp/spGfxCurveLine.cpp ../sp/spGfxCurveLine.h
-	@echo building spGfxCurveLine.cpp...
-	g++ -c -std=gnu++17 ../sp/spGfxCurveLine.cpp
+spShapes.o: ../sp/spShapes.cpp ../sp/spShapes.h
+	@echo building spShapes.cpp...
+	g++ -c -std=gnu++17 ../sp/spShapes.cpp
 
-spGfxShapes.o: ../sp/spGfxShapes.cpp ../sp/spGfxShapes.h
-	@echo building spGfxShapes.cpp...
-	g++ -c -std=gnu++17 ../sp/spGfxShapes.cpp
+spModelLoader.o: ../sp/spModelLoader.cpp ../sp/spModelLoader.h
+	@echo building spModelLoader.cpp...
+	g++ -c -std=gnu++17 ../sp/spModelLoader.cpp
+
+spModel.o: ../sp/spModel.cpp ../sp/spModel.h
+	@echo building spModel.cpp...
+	g++ -c -std=gnu++17 ../sp/spModel.cpp
+
+spMatrix.o: ../sp/spMatrix.cpp ../sp/spMatrix.h
+	@echo building spMatrix.cpp...
+	g++ -c -std=gnu++17 ../sp/spMatrix.cpp
+
+spFragmentsMapper.o: ../sp/spFragmentsMapper.cpp ../sp/spFragmentsMapper.h
+	@echo building spFragmentsMapper.cpp...
+	g++ -c -std=gnu++17 ../sp/spFragmentsMapper.cpp
+
+spClippingAlgorithms.o: ../sp/spClippingAlgorithms.cpp ../sp/spClippingAlgorithms.h
+	@echo building spClippingAlgorithms.cpp...
+	g++ -c -std=gnu++17 ../sp/spClippingAlgorithms.cpp
+
+spCamera.o: ../sp/spCamera.cpp ../sp/spCamera.h
+	@echo building spCamera.cpp...
+	g++ -c -std=gnu++17 ../sp/spCamera.cpp
+
+spBitMap.o: ../sp/spBitMap.cpp ../sp/spBitMap.h
+	@echo building spBitMap.cpp...
+	g++ -c -std=gnu++17 ../sp/spBitMap.cpp
+
+spBitMapLoader.o: ../sp/spBitMapLoader.cpp ../sp/spBitMapLoader.h
+	@echo building spBitMapLoader.cpp...
+	g++ -c -std=gnu++17 ../sp/spBitMapLoader.cpp
 
 clean:
 	@echo cleaning...
