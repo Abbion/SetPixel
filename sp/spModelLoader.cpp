@@ -128,23 +128,33 @@ void sp::ModelLoader::loadFaceElements(const std::string& str)
     std::getline(strStream, intStr, ' ');
     std::getline(strStream, intStr, '/');
     vertexTemp.x = std::stoi(intStr);
-    std::getline(strStream, intStr, '/');
-    textureTemp.x = std::stoi(intStr);
+    if (m_texture)
+    {
+        std::getline(strStream, intStr, '/');
+        textureTemp.x = std::stoi(intStr);
+    }
 
     std::getline(strStream, intStr, ' ');
     std::getline(strStream, intStr, '/');
     vertexTemp.y = std::stoi(intStr);
-    std::getline(strStream, intStr, '/');
-    textureTemp.y = std::stoi(intStr);
+    if (m_texture)
+    {
+        std::getline(strStream, intStr, '/');
+        textureTemp.y = std::stoi(intStr);
+    }
 
     std::getline(strStream, intStr, ' ');
     std::getline(strStream, intStr, '/');
     vertexTemp.z = std::stoi(intStr);
-    std::getline(strStream, intStr, '/');
-    textureTemp.z = std::stoi(intStr);
+    if (m_texture)
+    {
+        std::getline(strStream, intStr, '/');
+        textureTemp.z = std::stoi(intStr);
+    }
 
     m_faceElements.push_back(vertexTemp);
-    m_faceElements.push_back(textureTemp);
+    if (m_texture)
+        m_faceElements.push_back(textureTemp);
 }
 //-----------------------------------------------------
 

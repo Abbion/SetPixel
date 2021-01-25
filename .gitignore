@@ -5,6 +5,7 @@ Windows/Release
 Windows/SetPixel/Debug
 Windows/SetPixel/Release
 Windows/.vs
+Windows/SetPixel/x64
 Windows/SetPixel/SetPixel.vcxproj
 Windows/SetPixel/SetPixel.vcxproj.filters
 Windows/SetPixel/SetPixel.vcxproj.user

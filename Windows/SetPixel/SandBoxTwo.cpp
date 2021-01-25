@@ -1,6 +1,6 @@
 #include "SandBoxTwo.h"
 
-SandBoxTwo::SandBoxTwo() : m_window(800, 600, "SandBoxOne"), m_camera(0.2, 5.0, 90)
+SandBoxTwo::SandBoxTwo() : m_window(800, 600, "SandBoxTwo"), m_camera(0.2, 5.0, 90)
 {
 	m_window.setPixelSize(4);
 	m_window.showFps(true);
@@ -53,7 +53,6 @@ void SandBoxTwo::update()
 		sp::Model tri = sp::GenerateModel(data, sp::fillType::TEXTURE, &tex);
 
 		m_window.clear();
-		
 		
 		for (int i = 0; i < tri.plv.size(); i++)
 		{
