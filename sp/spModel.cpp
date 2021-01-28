@@ -3,7 +3,6 @@
 #include "spShapes.h"
 #include "spFragmentsMapper.h"
 
-
 //-----------------------------------------------------
 sp::Model sp::GenerateModel(std::vector<sp::vector3f>& vertexVec, fillType type, const BitMapTexture* texture, bool faceCulling, bool switchCullingDirection)
 {
@@ -18,25 +17,27 @@ sp::Model sp::GenerateModel(std::vector<sp::vector3f>& vertexVec, fillType type,
     sp::Model finalModel;
     int count = vertexVec.size();
     int blockSize = 3 * offset;
+
     if (count % blockSize != 0)
     {
         count -= count % blockSize;
     }
+
     for (int i = 0; i < count; i += blockSize)
     {
         bool showFace = true;
         if (faceCulling)
             showFace = sp::faceCulling(vertexVec[i], vertexVec[i + offset], vertexVec[i + (2 * offset)]);
-        
-        if (!switchCullingDirection & showFace)
+
+        if (!switchCullingDirection && showFace)
         {
             std::vector<sp::vector3f> output;
             sp::clipTriangleToPlanes(vertexVec, i, offset, output, viewPlanes);
             int l = 0;
 
-            for (int k = 0; k < output.size(); k += blockSize)
+            for (int j = 0; j < output.size(); j += blockSize)
             {
-                sp::BitMap triangles = sp::Triangle(output[k], output[k + offset], output[k + (2 * offset)]);
+                sp::BitMap triangles = sp::Triangle(output[j], output[j + offset], output[j + (2 * offset)]);
                 if (triangles.m_bitMapData != nullptr)
                 {
                     finalModel.bm.marge(triangles);
@@ -57,7 +58,6 @@ sp::Model sp::GenerateModel(std::vector<sp::vector3f>& vertexVec, fillType type,
             }
         }
     }
-
     return finalModel;
 }
 //-----------------------------------------------------

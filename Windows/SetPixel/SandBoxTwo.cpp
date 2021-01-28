@@ -15,8 +15,8 @@ void SandBoxTwo::update()
 	SP_FLOAT rot = 0.0;
 	SP_FLOAT scl = 1.0;
 
-	sp::ModelLoader model("Spyro.obj", true);
-	sp::BitMapTexture tex("Body.bmp", false, true);
+	sp::ModelLoader model("Cat.obj", false);
+	//sp::BitMapTexture tex("Body.bmp", false, true);
 
 
 	while (m_window.isOpen())
@@ -41,16 +41,16 @@ void SandBoxTwo::update()
 		sp::Matrix4 M1;
 		sp::Matrix4 translate = sp::Transform::translate(sp::vector3f(0.0, -1.0, 0.5));
 		sp::Matrix4 rotate = sp::Transform::rotateByY(rot);
-		sp::Matrix4 scale = sp::Transform::scale(sp::vector3f(0.1f, 0.1f, 0.1f));
+		sp::Matrix4 scale = sp::Transform::scale(sp::vector3f(0.5f, 0.5f, 0.5f));
 		sp::Matrix4 projection = sp::Transform::cameraProjectionMatrix(0.5, 5, 39.6);
 		sp::Matrix4 view = m_camera.getCameraTransform();
 
 		M1 = scale * rotate * translate * view * projection;
 
-		sp::Transform::applyTransform(data, M1, 1);
+		sp::Transform::applyTransform(data, M1, model.checkIfTexutreIncluded());
 
 		
-		sp::Model tri = sp::GenerateModel(data, sp::fillType::TEXTURE, &tex);
+		sp::Model tri = sp::GenerateModel(data, sp::fillType::NONE);
 
 		m_window.clear();
 		
@@ -60,7 +60,7 @@ void SandBoxTwo::update()
 		}
 		
 		
-		//m_window.draw(tri.bm);
+		m_window.draw(tri.bm);
 		m_window.display();
 	}
 }

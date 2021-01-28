@@ -115,7 +115,7 @@ void SandBoxOne::update()
 			//sp::Transform::applyTransform(model, M1);
 
 			M1 = view * projection;
-			sp::Transform::applyTransform(model, M1);
+			sp::Transform::applyTransform(model, M1, false);
 			
 
 			sp::Model cubeMesh = sp::GenerateModel(model, sp::fillType::COLOR);	//VIEW CLIPPING HERE

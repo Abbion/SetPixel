@@ -13,6 +13,7 @@ namespace sp{
         ~ModelLoader();
 
         std::vector<sp::vector3f> getModelData() const { return m_modelData; }
+        bool checkIfTexutreIncluded() { return m_texture; }
 
     private:
         std::vector<sp::vector3f> m_modelData;

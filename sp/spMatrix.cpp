@@ -354,9 +354,10 @@ void sp::Transform::applyTransform(sp::vector3f* vertexArr, int count, const Mat
 
 
 //-----------------------------------------------------
-void sp::Transform::applyTransform(std::vector<sp::vector3f>& vertexVec, const Matrix4& transform, int offset , int startFrom )
+void sp::Transform::applyTransform(std::vector<sp::vector3f>& vertexVec, const Matrix4& transform, bool hasTexture)
 {
-    for(int i = startFrom; i < vertexVec.size(); i += offset + 1)
+    int offset = hasTexture ? 2 : 1;
+    for(int i = 0; i < vertexVec.size(); i += offset)
     {
         sp::vector3f temp;
         temp.x = (vertexVec[i].x * transform.value[0][0]) + (vertexVec[i].y * transform.value[1][0]) + (vertexVec[i].z * transform.value[2][0]) + (1 * transform.value[3][0]);
